@@ -2,7 +2,7 @@
     "name": "Combined Explorer",
     "text": "To begin, select a target to view.",
     "globalText": "Modify the sliders to change the values on the map (refresh takes a couple seconds).",
-    "mainToggle": {"index": 0, "text": "Toggle Restoration Score on or off"},
+    "mainToggle": {"text": "Toggle Restoration Score on or off"},
     "ddText": "Choose a Target",
     "betweenGroups": "*",
     "averageGroups": true,
@@ -10,6 +10,7 @@
     "pluginHeight": 520,
     "regions": [
         {
+		  "methods": "methods/test.pdf",
 		  "combined": {
 			"name": "Combined",
 			"formula" : ""
@@ -250,6 +251,7 @@
 
         },
         {
+		  "methods": "methods/test.pdf",
 		  "combined": {
 			"name": "Combined",
 			"formula" : ""

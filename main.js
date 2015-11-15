@@ -255,7 +255,7 @@ define([
 
 					} else {
 
-						this.sph = cdg.h-73;
+						this.sph = cdg.h-116;   //73
 
 					}
 
@@ -466,11 +466,49 @@ define([
 
 
 					this.buttonpane = new ContentPane({
-					  style:"border-top-style:groove !important; height:38px;overflow: hidden !important;background-color:#F3F3F3 !important;padding:2px !important;"
+					  style:"border-top-style:groove !important; height:80px;overflow: hidden !important;background-color:#F3F3F3 !important;padding:2px !important;", innerHTML: '<table style="width:100%;padding:0; margin:0"><tr><td style="padding:2px; margin:0"></td><td style="padding:2px; margin:0"></td style="padding:2px; margin:0"></tr><tr><td colspan="2" style="padding:2px; margin:0"></td></tr></table>'
 					});
 
 					dom.byId(this.container).appendChild(this.buttonpane.domNode);
 
+					parser.parse();
+					
+					
+					alert("hi")
+					//thing = (dojoquery(this.buttonpane.domNode).children());
+
+					//thing2 = dojoquery(thing[0]).children();
+					
+					//console.log(dojoquery(thing[0]).children();
+					
+					tds = dojoquery("td", this.buttonpane.domNode);
+					
+					ulnode = (dojoquery(tds[0]));
+					
+					thing = dojoquery(ulnode)[0];
+					
+					ulnode = domConstruct.create("span");
+					
+					thing.appendChild(ulnode);
+
+
+					urnode = (dojoquery(tds[1]));
+					
+					thing = dojoquery(urnode)[0];
+					
+					urnode = domConstruct.create("span");
+					
+					thing.appendChild(urnode);
+					
+					
+					llnode = (dojoquery(tds[2]));
+					
+					thing = dojoquery(llnode)[0];
+					
+					llnode = domConstruct.create("span");
+					
+					thing.appendChild(llnode);
+					
 /* 					exportButton = new Button({
 						label: "Export",
 						style:  "float:right !important;",
@@ -499,6 +537,31 @@ define([
 
 					this.buttonpane.domNode.appendChild(exportButton.domNode); */
 
+					resetButton = new Button({
+						label: "Reset Tab",
+						style:  "float:left !important;",
+						onClick: function(){alert("reset tab")}
+						});
+					
+					ulnode.appendChild(resetButton.domNode);
+
+					resetAllButton = new Button({
+						label: "Reset All",
+						style:  "float:left !important;",
+						onClick: function(){alert("reset all")}
+						});
+					
+					ulnode.appendChild(resetAllButton.domNode);
+					
+					SyncButton = new ToggleButton({
+						label: "Sync Maps",
+						checked: false,
+						style:  "float:left !important;"//,
+						//onClick: function(){window.open(geography.methods)}
+						});
+						
+					ulnode.appendChild(SyncButton.domNode);
+					
 					if (geography.methods != undefined) {
 						methodsButton = new Button({
 							label: "Methods",
@@ -506,7 +569,7 @@ define([
 							onClick: function(){window.open(geography.methods)}
 							});
 
-						this.buttonpane.domNode.appendChild(methodsButton.domNode);
+						urnode.appendChild(methodsButton.domNode);
 					}
 					
 					if (geography.tabs.length > 1) {
@@ -520,6 +583,37 @@ define([
 						//this.buttonpane.domNode.appendChild(CombineButton.domNode);
 						
 						//CombineButton.startup();
+					}
+					
+					if (this.explorerObject.mainToggle != undefined) {
+						
+
+						if (this.explorerObject.mainToggle.default == undefined) {
+						  this.explorerObject.mainToggle.default = 1;
+						}
+
+							//brtext = domConstruct.create("span", {style:"float:left !important;", innerHTML: "<br>"});
+							//this.buttonpane.domNode.appendChild(brtext);
+							
+							mainchecknode = domConstruct.create("input", {style:"float:left !important;", innerHTML: ""});
+							llnode.appendChild(mainchecknode);
+
+									 this.MainCheck = new CheckBox({
+										name: "ExplorerCheck",
+										value: 1,
+										title: this.explorerObject.mainToggle.text,
+										checked: this.explorerObject.mainToggle.default,
+										onChange: lang.hitch(this,function(e) {this.currentLayer.setVisibility(e)}),
+										}, mainchecknode);
+
+										parser.parse()
+
+							mainchecknodetext = domConstruct.create("span", {style:"float:left !important;", innerHTML: this.explorerObject.mainToggle.text , for: this.MainCheck.id});
+							llnode.appendChild(mainchecknodetext);
+
+							
+						
+						
 					}
 
 					domStyle.set(this.textnode, "display", "none");
@@ -563,7 +657,8 @@ define([
 					itemIndex = 0;
 					array.forEach(tab.items, lang.hitch(this,function(entry, i){
 
-						if (this.explorerObject.mainToggle != undefined) {
+					/*
+			if (this.explorerObject.mainToggle != undefined) {
 
                 if (this.explorerObject.mainToggle.default == undefined) {
                   this.explorerObject.mainToggle.default = 1;
@@ -587,7 +682,7 @@ define([
 								this.sliderpane.domNode.appendChild(mainchecknodetext);
 							}
 						}
-
+*/
 
 
 						if (entry.group == undefined) {
