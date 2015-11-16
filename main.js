@@ -246,16 +246,18 @@ define([
 
 			     resize: function(w, h) {
 
+					domStyle.set(this.container, 'overflow', 'hidden');
+				 
 					cdg = domGeom.position(this.container);
 
 
 					if (cdg.h == 0) {
 
-						this.sph = this.height - 112
+						this.sph = this.height - 155
 
 					} else {
 
-						this.sph = cdg.h-116;   //73
+						this.sph = cdg.h-116;   //73 
 
 					}
 
@@ -282,6 +284,8 @@ define([
 					this.spinnerURL = localrequire.toUrl("./images/spinner.gif");
 
 					console.log(this.explorerObject);
+					
+					this.ResetObject = lang.clone(this.explorerObject);
 
 
 					if (this.explorerObject.betweenGroups == undefined) {
@@ -381,9 +385,78 @@ define([
 
 
         },
+		
+		resetAll: function() {
+		
+				console.log("reset");
+				
+					try {
+						selectedIndex = this.tabpan.selectedChildWidget.index;
+						its = this.geography.tabs[selectedIndex].items;
+					} catch(err) {
+						selectedIndex = 0;
+						its = this.geography.items
+					}
+				
+				reseter = lang.clone(this.ResetObject);
+				
+				
+				array.forEach(reseter.regions, lang.hitch(this,function(reg, t){
+				
+				  if (reg.name == this.geography.name) {
+					  
+					  outreg = reg;
+					  
+				  }
+				
+				}));
+			
+				this.changeGeography(outreg, false);
+				
+				tabs = this.tabpan.getChildren();
+				
+				this.tabpan.selectChild(tabs[selectedIndex]);
+			
+			
+		},
+
+		
+		resetTab: function() {
+		
+				console.log("reset tab");
+
+					try {
+						selectedIndex = this.tabpan.selectedChildWidget.index;
+						its = this.geography.tabs[selectedIndex].items;
+					} catch(err) {
+						selectedIndex = 0;
+						its = this.geography.items
+					}
+				
+				reseter = lang.clone(this.ResetObject);
+			
+				array.forEach(reseter.regions, lang.hitch(this,function(reg, t){
+				
+				  if (reg.name == this.geography.name) {
+					  
+					  outreg = reg;
+					  
+				  }
+				
+				}));
+				
+				this.geography.tabs[selectedIndex] = outreg.tabs[selectedIndex]
+				
+				this.changeGeography(this.geography, false);
+				
+				tabs = this.tabpan.getChildren();
+				
+				this.tabpan.selectChild(tabs[selectedIndex]);
+			
+		},		
 
         resetPanel: function() {
-
+		
           if (this.ancillaryLayer != undefined) {
               this.map.removeLayer(this.ancillaryLayer)
           }
@@ -400,11 +473,18 @@ define([
             this.buttonpane.destroy();
 
           }
+		  
+		  if (this.tabpan != undefined) {
+			 
+			this.tabpan.destroy();
+			
+		  }
 
 
         },
 
-			   changeGeography: function(geography, zoomto) {
+		
+		changeGeography: function(geography, zoomto) {
 
            if (geography.dataset == undefined) {
               this.isVector = false;
@@ -474,13 +554,6 @@ define([
 					parser.parse();
 					
 					
-					alert("hi")
-					//thing = (dojoquery(this.buttonpane.domNode).children());
-
-					//thing2 = dojoquery(thing[0]).children();
-					
-					//console.log(dojoquery(thing[0]).children();
-					
 					tds = dojoquery("td", this.buttonpane.domNode);
 					
 					ulnode = (dojoquery(tds[0]));
@@ -537,22 +610,6 @@ define([
 
 					this.buttonpane.domNode.appendChild(exportButton.domNode); */
 
-					resetButton = new Button({
-						label: "Reset Tab",
-						style:  "float:left !important;",
-						onClick: function(){alert("reset tab")}
-						});
-					
-					ulnode.appendChild(resetButton.domNode);
-
-					resetAllButton = new Button({
-						label: "Reset All",
-						style:  "float:left !important;",
-						onClick: function(){alert("reset all")}
-						});
-					
-					ulnode.appendChild(resetAllButton.domNode);
-					
 					SyncButton = new ToggleButton({
 						label: "Sync Maps",
 						checked: false,
@@ -561,6 +618,14 @@ define([
 						});
 						
 					ulnode.appendChild(SyncButton.domNode);
+
+					resetAllButton = new Button({
+						label: "Reset",
+						style:  "float:left !important;",
+						onClick: lang.hitch(this, this.resetAll)
+						});
+					
+					ulnode.appendChild(resetAllButton.domNode);
 					
 					if (geography.methods != undefined) {
 						methodsButton = new Button({
@@ -583,11 +648,20 @@ define([
 						//this.buttonpane.domNode.appendChild(CombineButton.domNode);
 						
 						//CombineButton.startup();
+						
+					resetButton = new Button({
+						label: "Reset Tab",
+						style:  "float:left !important;",
+						onClick: lang.hitch(this, this.resetTab)
+						});
+					
+					ulnode.appendChild(resetButton.domNode);
+					
 					}
 					
 					if (this.explorerObject.mainToggle != undefined) {
 						
-
+					/*	
 						if (this.explorerObject.mainToggle.default == undefined) {
 						  this.explorerObject.mainToggle.default = 1;
 						}
@@ -611,8 +685,22 @@ define([
 							mainchecknodetext = domConstruct.create("span", {style:"float:left !important;", innerHTML: this.explorerObject.mainToggle.text , for: this.MainCheck.id});
 							llnode.appendChild(mainchecknodetext);
 
-							
-						
+					*/
+
+						    var trslider = new HorizontalSlider({
+								name: "slider",
+								value: 1,
+								minimum: 0,
+								maximum: 1,
+								showButtons: false,
+								intermediateChanges: true,
+								style: "width:100px;",
+								onChange: lang.hitch(this,function(e) {this.currentLayer.setOpacity(e)})
+							})
+
+							mainchecknodetext = domConstruct.create("span", {style:"float:left !important;", innerHTML: this.explorerObject.mainToggle.text });
+							llnode.appendChild(mainchecknodetext);
+							llnode.appendChild(trslider.domNode);							
 						
 					}
 
