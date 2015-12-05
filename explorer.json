@@ -1,5 +1,5 @@
 {
-    "name": "Combined Explorer",
+    "name": "Habitat Explorer",
     "text": "To begin, select a target to view.",
     "globalText": "Modify the sliders to change the values on the map (refresh takes a couple seconds).",
     "mainToggle": {"text": "Main Layer Transparency"},
@@ -23,13 +23,13 @@
 				"inputRanges" : [0,50,51,75,76,100],
 				"outputValues" : [1,2,3],
 				"items": [	{
-								"text": "<b>Ecological Variables (weight):</b>",
+								"text": "<b>Weights:</b>",
 								"type": "text"
 							},
 							{
 								"default": 2,
 								"group": "all",
-								"index": "B2",
+								"index": "B1",
 								"max": 4,
 								"min": 0,
 								"step": 1,
@@ -40,11 +40,11 @@
 							{
 								"default": 2,
 								"group": "all",
-								"index": "B1",
+								"index": "B2",
 								"max": 4,
 								"min": 0,
 								"step": 1,
-								"text": "Invasives",
+								"text": "Regeneration",
 								"help": "Help Text.",
 								"type": "layer"
 							},
@@ -55,7 +55,7 @@
 								"max": 4,
 								"min": 0,
 								"step": 1,
-								"text": "Regeneration",
+								"text": "Large Snag Density",
 								"help": "More Help",
 								"type": "layer"
 							},
@@ -66,7 +66,18 @@
 								"max": 4,
 								"min": 0,
 								"step": 1,
-								"text": "Relative Species Richness",
+								"text": "Relative Canopy Diversity",
+								"help": "Even More Help",
+								"type": "layer"
+							},
+							{
+								"default": 2,
+								"group": "all",
+								"index": "B5",
+								"max": 4,
+								"min": 0,
+								"step": 1,
+								"text": "Invasives Prevalence",
 								"help": "Even More Help",
 								"type": "layer"
 							}
@@ -80,19 +91,8 @@
 				"inputRanges" : [0,50,51,75,76,100],
 				"outputValues" : [1,2,3],
 				"items": [	{
-								"text": "<b>Ecological Variables (weight):</b>",
+								"text": "<b>Weights:</b>",
 								"type": "text"
-							},
-							{
-								"default": 2,
-								"group": "all",
-								"index": "B5",
-								"max": 4,
-								"min": 0,
-								"step": 1,
-								"text": "Connectedness Loss",
-								"help": "this is where the help text goes",
-								"type": "layer"
 							},
 							{
 								"default": 2,
@@ -101,8 +101,8 @@
 								"max": 4,
 								"min": 0,
 								"step": 1,
-								"text": "Fragmentation",
-								"help": "Help Text.",
+								"text": "Pest and Pathogens",
+								"help": "this is where the help text goes",
 								"type": "layer"
 							},
 							{
@@ -112,7 +112,40 @@
 								"max": 4,
 								"min": 0,
 								"step": 1,
-								"text": "Invasives Risk",
+								"text": "Invasive Plants",
+								"help": "Help Text.",
+								"type": "layer"
+							},
+							{
+								"default": 2,
+								"group": "all",
+								"index": "B8",
+								"max": 4,
+								"min": 0,
+								"step": 1,
+								"text": "Loss of Connectedness",
+								"help": "More Help",
+								"type": "layer"
+							},
+							{
+								"default": 2,
+								"group": "all",
+								"index": "B9",
+								"max": 4,
+								"min": 0,
+								"step": 1,
+								"text": "Fragmentation",
+								"help": "More Help",
+								"type": "layer"
+							},
+							{
+								"default": 2,
+								"group": "all",
+								"index": "B10",
+								"max": 4,
+								"min": 0,
+								"step": 1,
+								"text": "Acid Deposition Sensitivity",
 								"help": "More Help",
 								"type": "layer"
 							}
@@ -126,41 +159,8 @@
 				"inputRanges" : [0,50,51,75,76,100],
 				"outputValues" : [1,2,3],
 				"items": [	{
-								"text": "<b>Ecological Variables (weight):</b>",
+								"text": "<b>Weights:</b>",
 								"type": "text"
-							},
-							{
-								"default": 2,
-								"group": "all",
-								"index": "B8",
-								"max": 4,
-								"min": 0,
-								"step": 1,
-								"text": "Canopy Species Richness",
-								"help": "this is where the help text goes",
-								"type": "layer"
-							},
-							{
-								"default": 2,
-								"group": "all",
-								"index": "B9",
-								"max": 4,
-								"min": 0,
-								"step": 1,
-								"text": "Connectedness",
-								"help": "Help Text.",
-								"type": "layer"
-							},
-							{
-								"default": 2,
-								"group": "all",
-								"index": "B10",
-								"max": 4,
-								"min": 0,
-								"step": 1,
-								"text": "Elevation Range",
-								"help": "More Help",
-								"type": "layer"
 							},
 							{
 								"default": 2,
@@ -169,8 +169,8 @@
 								"max": 4,
 								"min": 0,
 								"step": 1,
-								"text": "Habitat Vulnerability",
-								"help": "More Help",
+								"text": "Landform Variety",
+								"help": "this is where the help text goes",
 								"type": "layer"
 							},
 							{
@@ -180,7 +180,40 @@
 								"max": 4,
 								"min": 0,
 								"step": 1,
-								"text": "Landform Variety",
+								"text": "Elevation Range",
+								"help": "Help Text.",
+								"type": "layer"
+							},
+							{
+								"default": 2,
+								"group": "all",
+								"index": "B13",
+								"max": 4,
+								"min": 0,
+								"step": 1,
+								"text": "Connectedness",
+								"help": "More Help",
+								"type": "layer"
+							},
+							{
+								"default": 2,
+								"group": "all",
+								"index": "B14",
+								"max": 4,
+								"min": 0,
+								"step": 1,
+								"text": "Tree Species Richness",
+								"help": "More Help",
+								"type": "layer"
+							},
+							{
+								"default": 2,
+								"group": "all",
+								"index": "B15",
+								"max": 4,
+								"min": 0,
+								"step": 1,
+								"text": "Habitat Vulnerability Rating",
 								"help": "More Help",
 								"type": "layer"
 							}
@@ -194,41 +227,8 @@
 				"inputRanges" : [0,50,51,75,76,100],
 				"outputValues" : [1,2,3],
 				"items": [	{
-								"text": "<b>Ecological Variables (weight):</b>",
+								"text": "<b>Weights:</b>",
 								"type": "text"
-							},
-							{
-								"default": 2,
-								"group": "all",
-								"index": "B13",
-								"max": 4,
-								"min": 0,
-								"step": 1,
-								"text": "aridity_change_class",
-								"help": "this is where the help text goes",
-								"type": "layer"
-							},
-							{
-								"default": 2,
-								"group": "all",
-								"index": "B14",
-								"max": 4,
-								"min": 0,
-								"step": 1,
-								"text": "GDD_change_class",
-								"help": "Help Text.",
-								"type": "layer"
-							},
-							{
-								"default": 2,
-								"group": "all",
-								"index": "B15",
-								"max": 4,
-								"min": 0,
-								"step": 1,
-								"text": "ppt_change_class",
-								"help": "More Help",
-								"type": "layer"
 							},
 							{
 								"default": 2,
@@ -237,7 +237,73 @@
 								"max": 4,
 								"min": 0,
 								"step": 1,
-								"text": "temp_change_class",
+								"text": "Change in Annual Aridity",
+								"help": "this is where the help text goes",
+								"type": "layer"
+							},
+							{
+								"default": 2,
+								"group": "all",
+								"index": "B17",
+								"max": 4,
+								"min": 0,
+								"step": 1,
+								"text": "Change in Summer Maximum Temperature",
+								"help": "Help Text.",
+								"type": "layer"
+							},
+							{
+								"default": 2,
+								"group": "all",
+								"index": "B18",
+								"max": 4,
+								"min": 0,
+								"step": 1,
+								"text": "Change in Number of Days below Freezing",
+								"help": "More Help",
+								"type": "layer"
+							},
+							{
+								"default": 2,
+								"group": "all",
+								"index": "B19",
+								"max": 4,
+								"min": 0,
+								"step": 1,
+								"text": "Change in Growing Degree Days",
+								"help": "More Help",
+								"type": "layer"
+							},
+							{
+								"default": 2,
+								"group": "all",
+								"index": "B20",
+								"max": 4,
+								"min": 0,
+								"step": 1,
+								"text": "Change in Total Annual Precipitation",
+								"help": "More Help",
+								"type": "layer"
+							},
+							{
+								"default": 2,
+								"group": "all",
+								"index": "B21",
+								"max": 4,
+								"min": 0,
+								"step": 1,
+								"text": "Change in Total Summer Precipitation",
+								"help": "More Help",
+								"type": "layer"
+							},
+							{
+								"default": 2,
+								"group": "all",
+								"index": "B22",
+								"max": 4,
+								"min": 0,
+								"step": 1,
+								"text": "Canopy Decline",
 								"help": "More Help",
 								"type": "layer"
 							}
@@ -246,7 +312,7 @@
 			}					  
 		  ],
 	        "name": "New York Forests",
-            "url": "http://dev.services2.coastalresilience.org/arcgis/rest/services/rasterExplorer/NY_CLIMAD/ImageServer",
+            "url": "http://dev.services2.coastalresilience.org/arcgis/rest/services/rasterExplorer/NY_CLIMAD_Forest_Multi/ImageServer",
 			"methods": "methods/Alabama_Dashboard.pdf"
 
         },
@@ -267,11 +333,21 @@
 							{
 								"default": 2, 
 								"group": "all", 
+								"index": "cstr_damstor_score", 
+								"max": 4, 
+								"min": 0, 
+								"step": 1, 
+								"text": "Flow Alteration", 
+								"type": "layer"
+							}, 
+							{
+								"default": 2, 
+								"group": "all", 
 								"index": "cstr_curr_imp_score", 
 								"max": 4, 
 								"min": 0, 
 								"step": 1, 
-								"text": "Percent Impervious Cover", 
+								"text": "% Impervious Cover", 
 								"type": "layer"
 							}, 
 							{
@@ -281,7 +357,7 @@
 								"max": 4, 
 								"min": 0, 
 								"step": 1, 
-								"text": "Lateral Connectivity", 
+								"text": "Floodplain Connectivity", 
 								"type": "layer"
 							}, 
 							{
@@ -291,7 +367,17 @@
 								"max": 4, 
 								"min": 0, 
 								"step": 1, 
-								"text": "Floodplain Processes", 
+								"text": "Functioning Floodplains", 
+								"type": "layer"
+							}, 
+							{
+								"default": 2, 
+								"group": "all", 
+								"index": "cstr_rdxstm_den_score", 
+								"max": 4, 
+								"min": 0, 
+								"step": 1, 
+								"text": "Fragmentation by Roads", 
 								"type": "layer"
 							}, 
 							{
@@ -317,31 +403,51 @@
 							{
 								"default": 2, 
 								"group": "all", 
-								"index": "cstr_curr_imp_score", 
+								"index": "tstr_chg_imp_score", 
 								"max": 4, 
 								"min": 0, 
 								"step": 1, 
-								"text": "Percent Impervious Cover", 
+								"text": "Change in Percent Impervious", 
 								"type": "layer"
 							}, 
 							{
 								"default": 2, 
 								"group": "all", 
-								"index": "cstr_lat_con_score", 
+								"index": "tstr_latcon_chg_score", 
 								"max": 4, 
 								"min": 0, 
 								"step": 1, 
-								"text": "Lateral Connectivity", 
+								"text": "Change in Floodplain Connectivity", 
 								"type": "layer"
 							}, 
 							{
 								"default": 2, 
 								"group": "all", 
-								"index": "cstr_ara_fpc_score", 
+								"index": "tstr_rdxfragrsk_score", 
 								"max": 4, 
 								"min": 0, 
 								"step": 1, 
-								"text": "Floodplain Processes", 
+								"text": "Connectivity Threat from Additional Roads", 
+								"type": "layer"
+							}, 
+							{
+								"default": 2, 
+								"group": "all", 
+								"index": "tstr_fldpollrsk_score", 
+								"max": 4, 
+								"min": 0, 
+								"step": 1, 
+								"text": "Flood Pollution Risk", 
+								"type": "layer"
+							}, 
+							{
+								"default": 2, 
+								"group": "all", 
+								"index": "tstr_aciddpossens_score", 
+								"max": 4, 
+								"min": 0, 
+								"step": 1, 
+								"text": "Acid Deposition Sensitivity", 
 								"type": "layer"
 							}
 						]			
@@ -357,31 +463,41 @@
 							{
 								"default": 2, 
 								"group": "all", 
-								"index": "cstr_lat_con_score", 
+								"index": "sstr_networklength_score", 
 								"max": 4, 
 								"min": 0, 
 								"step": 1, 
-								"text": "Lateral Connectivity", 
+								"text": "Connected Network Length", 
 								"type": "layer"
 							}, 
 							{
 								"default": 2, 
 								"group": "all", 
-								"index": "cstr_ara_fpc_score", 
+								"index": "sstr_szclct_score", 
 								"max": 4, 
 								"min": 0, 
 								"step": 1, 
-								"text": "Floodplain Processes", 
+								"text": "Size Variety", 
 								"type": "layer"
 							}, 
 							{
 								"default": 2, 
 								"group": "all", 
-								"index": "cstr_impair_score", 
+								"index": "sstr_slpclct_score", 
 								"max": 4, 
 								"min": 0, 
 								"step": 1, 
-								"text": "Water Quality Impairments", 
+								"text": "Slope Variety", 
+								"type": "layer"
+							}, 
+							{
+								"default": 2, 
+								"group": "all", 
+								"index": "sstr_tempclct_score", 
+								"max": 4, 
+								"min": 0, 
+								"step": 1, 
+								"text": "Temperature Variety", 
 								"type": "layer"
 							}
 
@@ -398,31 +514,81 @@
 							{
 								"default": 2, 
 								"group": "all", 
-								"index": "cstr_curr_imp_score", 
+								"index": "estr_temp_chg_score", 
 								"max": 4, 
 								"min": 0, 
 								"step": 1, 
-								"text": "Percent Impervious Cover", 
+								"text": "Change in Stream Temperature Class", 
 								"type": "layer"
 							}, 
 							{
 								"default": 2, 
 								"group": "all", 
-								"index": "cstr_lat_con_score", 
+								"index": "estr_xppt_fut_recur_score", 
 								"max": 4, 
 								"min": 0, 
 								"step": 1, 
-								"text": "Lateral Connectivity", 
+								"text": "Change in Extreme Precipitation", 
 								"type": "layer"
 							}, 
 							{
 								"default": 2, 
 								"group": "all", 
-								"index": "cstr_impair_score", 
+								"index": "estr_aridity_change_score", 
 								"max": 4, 
 								"min": 0, 
 								"step": 1, 
-								"text": "Water Quality Impairments", 
+								"text": "Change in Annual Aridity", 
+								"type": "layer"
+							}, 
+							{
+								"default": 2, 
+								"group": "all", 
+								"index": "estr_maxt_jja_score", 
+								"max": 4, 
+								"min": 0, 
+								"step": 1, 
+								"text": "Change in Summer Maximum Temperature", 
+								"type": "layer"
+							}, 
+							{
+								"default": 2, 
+								"group": "all", 
+								"index": "estr_tn32_ann_score", 
+								"max": 4, 
+								"min": 0, 
+								"step": 1, 
+								"text": "Change in Number of Days below Freezing", 
+								"type": "layer"
+							}, 
+							{
+								"default": 2, 
+								"group": "all", 
+								"index": "estr_gdd50_ann_score", 
+								"max": 4, 
+								"min": 0, 
+								"step": 1, 
+								"text": "Change in Growing Degree Days", 
+								"type": "layer"
+							}, 
+							{
+								"default": 2, 
+								"group": "all", 
+								"index": "estr_pcpn_ann_score", 
+								"max": 4, 
+								"min": 0, 
+								"step": 1, 
+								"text": "Change in Total Annual Precipitation", 
+								"type": "layer"
+							}, 
+							{
+								"default": 2, 
+								"group": "all", 
+								"index": "estr_pcpn_jja_score", 
+								"max": 4, 
+								"min": 0, 
+								"step": 1, 
+								"text": "Change in Total Summer Precipitation", 
 								"type": "layer"
 							}
 						]			
@@ -434,122 +600,7 @@
             "url": "http://dev.services2.coastalresilience.org/arcgis/rest/services/PostGIS/DatabaseConnection/MapServer",
 			"workspaceId": "postgis",
 			"geometryType": "polyline",
-			"dataset": "sde.ny_condition_lines",
-			"reqFields": ["objectid", "shape"],
-			"defaultSymbol": {   	"type": "esriSLS",
-					 	"style": "esriSLSSolid",
-						"color": [150,150,150,0],
-						"width": 2
-							},
-			"colorRamp": [[255, 255, 129, 255], [131, 238, 13, 255], [76, 190, 110, 255], [39, 115, 163, 255], [13, 31, 133, 255]]
-        },
-		{
-            "items": [	{
-							"text": "<b>Ecological Variables (weight):</b>",
-							"type": "text"
-						},
-						{
-							"default": 2,
-							"group": "all",
-							"index": "B1",
-							"max": 4,
-							"min": 0,
-							"step": 1,
-							"text": "Patch Size",
-							"help": "this is where the help text goes",
-							"type": "layer"
-						},
-						{
-							"default": 2,
-							"group": "all",
-							"index": "B2",
-							"max": 4,
-							"min": 0,
-							"step": 1,
-							"text": "Invasives",
-							"help": "Help Text.",
-							"type": "layer"
-						},
-						{
-							"default": 2,
-							"group": "all",
-							"index": "B3",
-							"max": 4,
-							"min": 0,
-							"step": 1,
-							"text": "Regeneration",
-							"help": "More Help",
-							"type": "layer"
-						},
-						{
-							"default": 2,
-							"group": "all",
-							"index": "B4",
-							"max": 4,
-							"min": 0,
-							"step": 1,
-							"text": "Relative Species Richness",
-							"help": "Even More Help",
-							"type": "layer"
-						}
-			],
-	          "name": "New York Orig",
-            "url": "http://dev.services2.coastalresilience.org/arcgis/rest/services/rasterExplorer/NY_CLIMAD_Forest/ImageServer",
-			"methods": "methods/Alabama_Dashboard.pdf",
-      "sliderLabels" : ["None","Low","Med","High","V.High"],
-      "colorRamp": [[1, 255, 255, 129], [2, 76, 190, 110], [3, 13, 31, 133]],
-      "inputRanges" : [0,50,51,75,76,100],
-      "outputValues" : [1,2,3]
-        },
-        {
-            "items": [	
-						{
-							"default": 2, 
-							"group": "all", 
-							"index": "cstr_curr_imp_score", 
-							"max": 4, 
-							"min": 0, 
-							"step": 1, 
-							"text": "Percent Impervious Cover", 
-							"type": "layer"
-						}, 
-						{
-							"default": 2, 
-							"group": "all", 
-							"index": "cstr_lat_con_score", 
-							"max": 4, 
-							"min": 0, 
-							"step": 1, 
-							"text": "Lateral Connectivity", 
-							"type": "layer"
-						}, 
-						{
-							"default": 2, 
-							"group": "all", 
-							"index": "cstr_ara_fpc_score", 
-							"max": 4, 
-							"min": 0, 
-							"step": 1, 
-							"text": "Floodplain Processes", 
-							"type": "layer"
-						}, 
-						{
-							"default": 2, 
-							"group": "all", 
-							"index": "cstr_impair_score", 
-							"max": 4, 
-							"min": 0, 
-							"step": 1, 
-							"text": "Water Quality Impairments", 
-							"type": "layer"
-						}
-			],
-            "name": "New York Streams Orig",
-            "sliderLabels" : ["None","Low","Med","High","V.High"],
-            "url": "http://dev.services2.coastalresilience.org/arcgis/rest/services/PostGIS/DatabaseConnection/MapServer",
-			"workspaceId": "postgis",
-			"geometryType": "polyline",
-			"dataset": "sde.ny_condition_lines",
+			"dataset": "sde.ny_climad_v2v1fcn_streams_allscores_nonull",
 			"reqFields": ["objectid", "shape"],
 			"defaultSymbol": {   	"type": "esriSLS",
 					 	"style": "esriSLSSolid",
