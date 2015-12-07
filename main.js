@@ -50,6 +50,7 @@ define([
 		"dojo/query",
 		"dojo/parser",
 		"dojo/NodeList-traverse",
+		"dijit/Tooltip",
 		"require",
 		"./combine",
 		"dojo/text!./explorer.json"
@@ -102,6 +103,7 @@ define([
 					dojoquery,
 					parser,
 					domNodeTraverse,
+					Tooltip,
 					localrequire,
 					combine,
 					
@@ -735,13 +737,6 @@ define([
 						
 					ulnode.appendChild(SyncButton.domNode);
 
-					resetAllButton = new Button({
-						label: "Reset",
-						style:  "float:left !important;",
-						onClick: lang.hitch(this, this.resetAll)
-						});
-					
-					ulnode.appendChild(resetAllButton.domNode);
 					
 					if (geography.methods != undefined) {
 						methodsButton = new Button({
@@ -768,12 +763,22 @@ define([
 					resetButton = new Button({
 						label: "Reset Tab",
 						style:  "float:left !important;",
+						title: "Resets sliders to defaults (all Medium) for just the currently open tab.",
 						onClick: lang.hitch(this, this.resetTab)
 						});
 					
 					ulnode.appendChild(resetButton.domNode);
 					
 					}
+					
+					resetAllButton = new Button({
+						label: "Reset All",
+						style:  "float:left !important;",
+						title: "Resets all sliders within the app, across all 4 tabs, to Medium.",
+						onClick: lang.hitch(this, this.resetAll)
+						});
+					
+					ulnode.appendChild(resetAllButton.domNode);
 					
 					if (this.explorerObject.mainToggle != undefined) {
 						
@@ -1102,12 +1107,18 @@ define([
 						//  style:"height:" + this.sph + "px !important",
 						//style: "height: 100%; width: 100%;",
 						  title: geography.combined.name,
-						  index: geography.tabs.length
+						  index: geography.tabs.length,
+						  content: geography.combined.text
 						});	
 
-						this.tabpan.addChild(this.sliderpane);				
+						this.tabpan.addChild(this.sliderpane);						
 			}
 				
+				if (geography.combined.selected == true) {
+				
+					this.tabpan.selectChild(this.sliderpane);
+				
+				}
 				
 					aspect.after(this.tabpan, "selectChild", lang.hitch(this,function (e, o) {
 
@@ -1131,6 +1142,8 @@ define([
 					}));
 				
 				this.tabpan.startup();
+				
+				
 				
 					if (this.isVector == true)  {
 
@@ -1213,6 +1226,8 @@ define([
 
 
 					this.resize();
+					
+					
 
 			   },
 
@@ -1673,7 +1688,7 @@ define([
              + '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100px" height="' + lh + '">'
              + innerSyms
              + '<text x="35" y="15" fill="black">Low</text>'
-             + '<text x="35" y="' + ((maxy + 15) / 2) + '" fill="black">Meduim</text>'
+             + '<text x="35" y="' + ((maxy + 15) / 2) + '" fill="black">Medium</text>'
              + '<text x="35" y="' + maxy + '" fill="black">High</text></svg>'
 
 					   //noleg = dom.byId("legend-0_msg")
