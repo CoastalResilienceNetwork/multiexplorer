@@ -260,7 +260,10 @@ define([
 		
 		vectorCombineFunction: function(formulas) {
 			
-			majorFormula = ("(" + formulas[0] + " * 1000) + (" + formulas[1] + " * 100)")
+			
+			majorFormula = ("(" + formulas[0] + " * 1000) + (" + formulas[1] + " * 100) + (" + formulas[2] + " * 10) + (" + formulas[3] + " * 1)"   )
+			
+			console.log(majorFormula)
 			
 			return majorFormula;
 			
