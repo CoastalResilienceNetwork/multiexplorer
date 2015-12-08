@@ -445,7 +445,7 @@
 							{
 								"default": 2, 
 								"group": "all", 
-								"index": "tstr_aciddpossens_score", 
+								"index": "tstr_aciddepossens_score", 
 								"max": 4, 
 								"min": 0, 
 								"step": 1, 
