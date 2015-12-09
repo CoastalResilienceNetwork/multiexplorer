@@ -258,14 +258,30 @@ define([
 						return outputData;
         },
 		
-		vectorCombineFunction: function(formulas) {
+		vectorCombineFunction: function(formulas, geo) {
 			
 			
-			majorFormula = ("(" + formulas[0] + " * 1000) + (" + formulas[1] + " * 100) + (" + formulas[2] + " * 10) + (" + formulas[3] + " * 1)"   )
+			//majorFormula = ("(" + formulas[0] + " * 1000) + (" + formulas[1] + " * 100) + (" + formulas[2] + " * 10) + (" + formulas[3] + " * 1)"   )
 			
-			console.log(majorFormula)
+			//console.log(majorFormula)
 			
-			return majorFormula;
+			
+			//console.log("SELECT " + oFields + ", " + rfout + " AS score FROM " + this.geography.dataset);
+			//"SELECT " + oFields + ", case when (" + formulas[0] + " > 75) then 1 else 0 end * 1000 AS score FROM " + geo.dataset
+			
+			
+			oFields = geo.reqFields.join(", ");
+			
+			//case when (" + formulas[0] + " > 75) then 1 else 0 end * 1000
+			
+			//" + case when (" + formulas[0] + " > 75) then case when (" + formulas[1] + " > 33) then 1 else 0 end else case when (" + formulas[1] + " > 67) then 1 else 0 end end * 100 "
+			
+			//case when (" + formulas[3] + " > 50) then 1 else 0 end * 1
+
+			console.log("SELECT " + oFields + ", (case when (" + formulas[0] + " > 75) then 1 else 0 end * 1000) + (case when (" + formulas[0] + " > 75) then case when (" + formulas[1] + " > 33) then 1 else 0 end else case when (" + formulas[1] + " > 67) then 1 else 0 end end * 100) + (case when (" + formulas[2] + " > 50) then 1 else 0 end * 10) + (case when (" + formulas[3] + " > 50) then 1 else 0 end * 1) AS score FROM " + geo.dataset);
+			
+			
+			//return majorFormula;
 			
 			//SQLOUT = "SELECT objectid, shape, " + majorFormula + " AS score FROM sde.ny_condition_lines"
 

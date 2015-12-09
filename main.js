@@ -1385,10 +1385,10 @@ define([
 					if (this.isVector == true)  {
 						
 
-						rfout = this.combiner.vectorCombineFunction(formulas);
+						rfout = this.combiner.vectorCombineFunction(formulas, this.geography);
 						
 
-						console.log("SELECT " + oFields + ", " + rfout + " AS score FROM " + this.geography.dataset);
+						//console.log("SELECT " + oFields + ", " + rfout + " AS score FROM " + this.geography.dataset);
 
 						var dynamicLayerInfos = [];
 						var dynamicLayerInfo = new esri.layers.DynamicLayerInfo();
