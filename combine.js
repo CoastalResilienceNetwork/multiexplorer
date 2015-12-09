@@ -1,12 +1,14 @@
 define([
     "dojo/_base/declare",
 	"esri/layers/RasterFunction",
+	"esri/symbols/SimpleLineSymbol",
 	"dojo/_base/array",
 	"dojo/_base/lang",
     "dojo/dom"
 ], function(
 	declare, 
 	RasterFunction,
+	SimpleLineSymbol,
 	array,
 	lang,
 	dom
@@ -50,6 +52,7 @@ define([
 					"Reduce Threat & Restore – High risk",
 					"Reduce Threat & Restore – Highest risk"
 				],
+				
 		
 		combineFunction: function(formulas){
 			
@@ -278,8 +281,38 @@ define([
 			
 			//case when (" + formulas[3] + " > 50) then 1 else 0 end * 1
 
-			console.log("SELECT " + oFields + ", (case when (" + formulas[0] + " > 75) then 1 else 0 end * 1000) + (case when (" + formulas[0] + " > 75) then case when (" + formulas[1] + " > 33) then 1 else 0 end else case when (" + formulas[1] + " > 67) then 1 else 0 end end * 100) + (case when (" + formulas[2] + " > 50) then 1 else 0 end * 10) + (case when (" + formulas[3] + " > 50) then 1 else 0 end * 1) AS score FROM " + geo.dataset);
+			outq = "SELECT " + oFields + ", (case when (" + formulas[0] + " > 75) then 1 else 0 end * 1000) + (case when (" + formulas[0] + " > 75) then case when (" + formulas[1] + " > 33) then 1 else 0 end else case when (" + formulas[1] + " > 67) then 1 else 0 end end * 100) + (case when (" + formulas[2] + " > 50) then 1 else 0 end * 10) + (case when (" + formulas[3] + " > 50) then 1 else 0 end * 1) AS score FROM " + geo.dataset;
+
+			console.log(outq);
+
+
 			
+			defsym = new SimpleLineSymbol({
+											"type": "esriSLS",
+											"style": "esriSLSSolid",
+											"color": [0,0,0,255],
+											"width": 2
+											})
+		
+			outrenderer = new esri.renderer.UniqueValueRenderer(defsym, "score");
+			
+             array.forEach(this.colors, lang.hitch(this,function(cColor, i){
+
+               outrenderer.addValue({
+								value: cColor[0],
+								symbol: new SimpleLineSymbol({
+											"type": "esriSLS",
+											"style": "esriSLSSolid",
+											"color": [cColor[1],cColor[2],cColor[3],255],
+											"width": 2
+											}),
+								label: this.labels[i],
+								description: this.labels[i]
+							  });
+  
+             }));
+		
+			return [outq, outrenderer];
 			
 			//return majorFormula;
 			

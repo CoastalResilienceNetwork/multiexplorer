@@ -1389,7 +1389,8 @@ define([
 						
 
 						//console.log("SELECT " + oFields + ", " + rfout + " AS score FROM " + this.geography.dataset);
-
+	
+						
 						var dynamicLayerInfos = [];
 						var dynamicLayerInfo = new esri.layers.DynamicLayerInfo();
 						dynamicLayerInfo.id = 1;
@@ -1397,7 +1398,7 @@ define([
 						var dataSource = new esri.layers.QueryDataSource();
 						dataSource.workspaceId = this.geography.workspaceId;
 						dataSource.geometryType = this.geography.geometryType;
-						dataSource.query = "SELECT " + oFields + ", " + rfout + " AS score FROM " + this.geography.dataset;
+						dataSource.query = rfout[0]; //"SELECT " + oFields + ", " + rfout + " AS score FROM " + this.geography.dataset;
 						dataSource.oidFields = ["objectid"]
 
 						//minquery = "SELECT " + this.formula + " AS score FROM " + this.geography.dataset
@@ -1406,9 +1407,23 @@ define([
 						this.layerSource.dataSource = dataSource;
 						dynamicLayerInfo.source = this.layerSource;
 						dynamicLayerInfos.push(dynamicLayerInfo);
-
+					
+						
+						console.log(rfout);
+						
 						this.currentLayer.setDynamicLayerInfos(dynamicLayerInfos);
+						
+						
+						var layerDrawingOptions = [];
+						var layerDrawingOption = new esri.layers.LayerDrawingOptions();
 
+						layerDrawingOption.renderer = rfout[1];
+
+						layerDrawingOptions[1] = layerDrawingOption;
+						this.currentLayer.setLayerDrawingOptions(layerDrawingOptions);
+
+						
+						//alert('');
 						//var queryTask = new QueryTask(this.currentLayer.url + "/dynamicLayer", { source: this.layerSource });
 
 						//var allFields = this.geography.reqFields.concat(indFields);
