@@ -1094,7 +1094,7 @@ define([
 									checked: false,
 									onChange: lang.hitch(this,function(b){
 										
-									
+										if (!b) {
 										
 											if (this.ancillaryLayer2 != undefined) {
 												  this.map.removeLayer(this.ancillaryLayer2)
@@ -1102,7 +1102,7 @@ define([
 												  console.log('removean');
 											}
 										
-										 if (b) {
+										} else {
 											
 											this.addAncillary(b,entry.ancillary, entry.text)
 											
