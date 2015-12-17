@@ -8,6 +8,7 @@
     "averageGroups": true,
 	"pluginWidth": 400,
     "pluginHeight": 520,
+	"noZoom": true,
     "regions": [
         {
 		  "methods": "methods/test.pdf",
@@ -20,9 +21,9 @@
 			{
 				"name": "Condition",
 				"sliderLabels" : ["None","Low","Med","High","V.High"],
-				"colorRamp": [[1, 255, 255, 129], [2, 76, 190, 110], [3, 13, 31, 133]],
-				"inputRanges" : [0,50,51,75,76,100],
-				"outputValues" : [1,2,3],
+				"colorRamp": [[1, 255, 255, 155], [2, 157,243,58], [3, 114,204,138], [4, 81,145,182], [5, 58,77,159]],
+				"inputRanges" : [0,20,21,40,41,60,61,80,81,100],
+				"outputValues" : [1,2,3,4,5],
 				"items": [	{
 								"text": "<b>Current Condition Indicators:</b>",
 								"type": "text"
@@ -36,7 +37,8 @@
 								"step": 1,
 								"text": "Patch Size",
 								"help": "this is where the help text goes",
-								"type": "layer"
+								"type": "layer",
+								"ancillary": { url : "http://dev.services2.coastalresilience.org/arcgis/rest/services/New_York/NY_CLIMAD_toolkit/MapServer", show: [62]}
 							},
 							{
 								"default": 2,
@@ -47,7 +49,8 @@
 								"step": 1,
 								"text": "Regeneration",
 								"help": "Help Text.",
-								"type": "layer"
+								"type": "layer",
+								"ancillary": { url : "http://dev.services2.coastalresilience.org/arcgis/rest/services/New_York/NY_CLIMAD_toolkit/MapServer", show: [65]}
 							},
 							{
 								"default": 2,
@@ -58,7 +61,8 @@
 								"step": 1,
 								"text": "Large Snag Density",
 								"help": "More Help",
-								"type": "layer"
+								"type": "layer",
+								"ancillary": { url : "http://dev.services2.coastalresilience.org/arcgis/rest/services/New_York/NY_CLIMAD_toolkit/MapServer", show: [64]}
 							},
 							{
 								"default": 2,
@@ -69,7 +73,8 @@
 								"step": 1,
 								"text": "Relative Canopy Diversity",
 								"help": "Even More Help",
-								"type": "layer"
+								"type": "layer",
+								"ancillary": { url : "http://dev.services2.coastalresilience.org/arcgis/rest/services/New_York/NY_CLIMAD_toolkit/MapServer", show: [66]}
 							},
 							{
 								"default": 2,
@@ -80,7 +85,8 @@
 								"step": 1,
 								"text": "Invasives Prevalence",
 								"help": "Even More Help",
-								"type": "layer"
+								"type": "layer",
+								"ancillary": { url : "http://dev.services2.coastalresilience.org/arcgis/rest/services/New_York/NY_CLIMAD_toolkit/MapServer", show: [63]}
 							}
 						]			
 			
@@ -88,9 +94,9 @@
 			{
 				"name": "Threat",
 				"sliderLabels" : ["None","Low","Med","High","V.High"],
-				"colorRamp": [[1, 255, 255, 129], [2, 76, 190, 110], [3, 13, 31, 133]],
-				"inputRanges" : [0,50,51,75,76,100],
-				"outputValues" : [1,2,3],
+				"colorRamp": [[1, 255, 255, 155], [2, 157,243,58], [3, 114,204,138], [4, 81,145,182], [5, 58,77,159]],
+				"inputRanges" : [0,20,21,40,41,60,61,80,81,100],
+				"outputValues" : [1,2,3,4,5],
 				"items": [	{
 								"text": "<b>Future Threat Indicators:</b>",
 								"type": "text"
@@ -104,7 +110,8 @@
 								"step": 1,
 								"text": "Pest and Pathogens",
 								"help": "this is where the help text goes",
-								"type": "layer"
+								"type": "layer",
+								"ancillary": { url : "http://dev.services2.coastalresilience.org/arcgis/rest/services/New_York/NY_CLIMAD_toolkit/MapServer", show: [73]}
 							},
 							{
 								"default": 2,
@@ -115,7 +122,8 @@
 								"step": 1,
 								"text": "Invasive Plants",
 								"help": "Help Text.",
-								"type": "layer"
+								"type": "layer",
+								"ancillary": { url : "http://dev.services2.coastalresilience.org/arcgis/rest/services/New_York/NY_CLIMAD_toolkit/MapServer", show: [72]}
 							},
 							{
 								"default": 2,
@@ -126,7 +134,8 @@
 								"step": 1,
 								"text": "Loss of Connectedness",
 								"help": "More Help",
-								"type": "layer"
+								"type": "layer",
+								"ancillary": { url : "http://dev.services2.coastalresilience.org/arcgis/rest/services/New_York/NY_CLIMAD_toolkit/MapServer", show: [69]}
 							},
 							{
 								"default": 2,
@@ -137,7 +146,8 @@
 								"step": 1,
 								"text": "Fragmentation",
 								"help": "More Help",
-								"type": "layer"
+								"type": "layer",
+								"ancillary": { url : "http://dev.services2.coastalresilience.org/arcgis/rest/services/New_York/NY_CLIMAD_toolkit/MapServer", show: [70]}
 							},
 							{
 								"default": 2,
@@ -148,7 +158,8 @@
 								"step": 1,
 								"text": "Acid Deposition Sensitivity",
 								"help": "More Help",
-								"type": "layer"
+								"type": "layer",
+								"ancillary": { url : "http://dev.services2.coastalresilience.org/arcgis/rest/services/New_York/NY_CLIMAD_toolkit/MapServer", show: [71]}
 							}
 						]			
 			
@@ -156,9 +167,9 @@
 			{
 				"name": "Sensitivity",
 				"sliderLabels" : ["None","Low","Med","High","V.High"],
-				"colorRamp": [[1, 255, 255, 129], [2, 76, 190, 110], [3, 13, 31, 133]],
-				"inputRanges" : [0,50,51,75,76,100],
-				"outputValues" : [1,2,3],
+				"colorRamp": [[1, 255, 255, 155], [2, 157,243,58], [3, 114,204,138], [4, 81,145,182], [5, 58,77,159]],
+				"inputRanges" : [0,20,21,40,41,60,61,80,81,100],
+				"outputValues" : [1,2,3,4,5],
 				"items": [	{
 								"text": "<b>Climate Change Exposure Indicators:</b>",
 								"type": "text"
@@ -172,7 +183,8 @@
 								"step": 1,
 								"text": "Landform Variety",
 								"help": "this is where the help text goes",
-								"type": "layer"
+								"type": "layer",
+								"ancillary": { url : "http://dev.services2.coastalresilience.org/arcgis/rest/services/New_York/NY_CLIMAD_toolkit/MapServer", show: [92]}
 							},
 							{
 								"default": 2,
@@ -183,7 +195,8 @@
 								"step": 1,
 								"text": "Elevation Range",
 								"help": "Help Text.",
-								"type": "layer"
+								"type": "layer",
+								"ancillary": { url : "http://dev.services2.coastalresilience.org/arcgis/rest/services/New_York/NY_CLIMAD_toolkit/MapServer", show: [90]}
 							},
 							{
 								"default": 2,
@@ -194,7 +207,8 @@
 								"step": 1,
 								"text": "Connectedness",
 								"help": "More Help",
-								"type": "layer"
+								"type": "layer",
+								"ancillary": { url : "http://dev.services2.coastalresilience.org/arcgis/rest/services/New_York/NY_CLIMAD_toolkit/MapServer", show: [93]}
 							},
 							{
 								"default": 2,
@@ -205,7 +219,8 @@
 								"step": 1,
 								"text": "Tree Species Richness",
 								"help": "More Help",
-								"type": "layer"
+								"type": "layer",
+								"ancillary": { url : "http://dev.services2.coastalresilience.org/arcgis/rest/services/New_York/NY_CLIMAD_toolkit/MapServer", show: [94]}
 							},
 							{
 								"default": 2,
@@ -216,7 +231,8 @@
 								"step": 1,
 								"text": "Habitat Vulnerability Rating",
 								"help": "More Help",
-								"type": "layer"
+								"type": "layer",
+								"ancillary": { url : "http://dev.services2.coastalresilience.org/arcgis/rest/services/New_York/NY_CLIMAD_toolkit/MapServer", show: [91]}
 							}
 						]			
 			
@@ -224,9 +240,9 @@
 			{
 				"name": "Exposure",
 				"sliderLabels" : ["None","Low","Med","High","V.High"],
-				"colorRamp": [[1, 255, 255, 129], [2, 76, 190, 110], [3, 13, 31, 133]],
-				"inputRanges" : [0,50,51,75,76,100],
-				"outputValues" : [1,2,3],
+				"colorRamp": [[1, 255, 255, 155], [2, 157,243,58], [3, 114,204,138], [4, 81,145,182], [5, 58,77,159]],
+				"inputRanges" : [0,20,21,40,41,60,61,80,81,100],
+				"outputValues" : [1,2,3,4,5],
 				"items": [	{
 								"text": "<b>Climate Change Sensitivity Indicators:</b>",
 								"type": "text"
@@ -240,7 +256,8 @@
 								"step": 1,
 								"text": "Change in Annual Aridity",
 								"help": "this is where the help text goes",
-								"type": "layer"
+								"type": "layer",
+								"ancillary": { url : "http://dev.services2.coastalresilience.org/arcgis/rest/services/New_York/NY_CLIMAD_toolkit/MapServer", show: [100]}
 							},
 							{
 								"default": 2,
@@ -251,7 +268,8 @@
 								"step": 1,
 								"text": "Change in Summer Maximum Temperature",
 								"help": "Help Text.",
-								"type": "layer"
+								"type": "layer",
+								"ancillary": { url : "http://dev.services2.coastalresilience.org/arcgis/rest/services/New_York/NY_CLIMAD_toolkit/MapServer", show: [97]}
 							},
 							{
 								"default": 2,
@@ -262,7 +280,8 @@
 								"step": 1,
 								"text": "Change in Number of Days below Freezing",
 								"help": "More Help",
-								"type": "layer"
+								"type": "layer",
+								"ancillary": { url : "http://dev.services2.coastalresilience.org/arcgis/rest/services/New_York/NY_CLIMAD_toolkit/MapServer", show: [99]}
 							},
 							{
 								"default": 2,
@@ -273,7 +292,8 @@
 								"step": 1,
 								"text": "Change in Growing Degree Days",
 								"help": "More Help",
-								"type": "layer"
+								"type": "layer",
+								"ancillary": { url : "http://dev.services2.coastalresilience.org/arcgis/rest/services/New_York/NY_CLIMAD_toolkit/MapServer", show: [99]}
 							},
 							{
 								"default": 2,
@@ -284,7 +304,8 @@
 								"step": 1,
 								"text": "Change in Total Annual Precipitation",
 								"help": "More Help",
-								"type": "layer"
+								"type": "layer",
+								"ancillary": { url : "http://dev.services2.coastalresilience.org/arcgis/rest/services/New_York/NY_CLIMAD_toolkit/MapServer", show: [98]}
 							},
 							{
 								"default": 2,
@@ -295,7 +316,8 @@
 								"step": 1,
 								"text": "Change in Total Summer Precipitation",
 								"help": "More Help",
-								"type": "layer"
+								"type": "layer",
+								"ancillary": { url : "http://dev.services2.coastalresilience.org/arcgis/rest/services/New_York/NY_CLIMAD_toolkit/MapServer", show: [62]}
 							},
 							{
 								"default": 2,
@@ -306,7 +328,8 @@
 								"step": 1,
 								"text": "Canopy Decline",
 								"help": "More Help",
-								"type": "layer"
+								"type": "layer",
+								"ancillary": { url : "http://dev.services2.coastalresilience.org/arcgis/rest/services/New_York/NY_CLIMAD_toolkit/MapServer", show: [62]}
 							}
 						]			
 			
