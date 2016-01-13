@@ -746,8 +746,8 @@ define([
 					SyncButton = new ToggleButton({
 						label: "Sync Maps",
 						checked: false,
-						style:  "float:left !important;"//,
-						//onClick: function(){window.open(geography.methods)}
+						style:  "float:left !important;",
+						onClick: lang.hitch(this, this.syncMaps)
 						});
 						
 					ulnode.appendChild(SyncButton.domNode);
@@ -863,7 +863,20 @@ define([
 						
 					//	localitems = geography.items;
 					//}
-					
+
+			if (geography.intro != undefined) {
+				
+						this.sliderpane = new ContentPane({
+							style:"padding: 8px",
+						//  style:"height:" + this.sph + "px !important",
+						//style: "height: 100%; width: 100%;",
+						  title: geography.intro.name,
+						  index: -1,
+						  content: geography.intro.text
+						});	
+
+						this.tabpan.addChild(this.sliderpane);						
+			}					
 					
 			array.forEach(geography.tabs, lang.hitch(this,function(tab, t){
 
@@ -1127,6 +1140,7 @@ define([
 
 							slider = new HorizontalSlider({
 								name: entry.group,
+								"data-mexslider": "mexSlider",
 								value: entry.default,
 								minimum: entry.min,
 								maximum: entry.max,
@@ -1300,6 +1314,24 @@ define([
 					
 					
 
+			   },
+			   
+			   
+			   syncMaps: function() {
+
+					allslids = dojoquery("[data-mexslider=mexSlider]");
+			   
+					console.log(allslids);
+			   
+					array.forEach(allslids, lang.hitch(this,function(entry, i){
+						
+						sl = registry.byId(entry);
+						//console.log(sl.getvalue());
+					  
+					}));
+
+					
+				 
 			   },
 			   
 			   addAncillary: function(b,ancillary, compText) {
@@ -1583,14 +1615,19 @@ define([
 
 					console.log(this.sliders)
 					
+					selectedIndex = this.tabpan.selectedChildWidget.index;
+					
+					if (selectedIndex > -1) {
+						
 					try {
-						selectedIndex = this.tabpan.selectedChildWidget.index;
 						its = this.geography.tabs[selectedIndex].items;
 					} catch(err) {
 						selectedIndex = 0;
 						its = this.geography.items
 					}
 			
+					this.currentLayer.show();
+				
 					//perhaps this needs to be done sometime but it appears to work now.
 					//formget = lang.hitch(this,this.getFormula(selectedIndex))
 					this.formula = this.getFormula(selectedIndex);
@@ -1819,7 +1856,12 @@ define([
 					   //domStyle.set(noleg, "display", "none");
 
 					}
-
+					
+					} else {
+						
+						this.currentLayer.hide();
+						
+					}
 			   },
 
 			   zoomQextent: function(results) {
@@ -1917,7 +1959,6 @@ define([
 
 						layerDrawingOptions[1] = layerDrawingOption;
 						this.currentLayer.setLayerDrawingOptions(layerDrawingOptions);
-
 
 			   },
 
