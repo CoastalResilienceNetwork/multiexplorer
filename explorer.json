@@ -12,7 +12,7 @@
     "regions": [
         {
 		  "methods": "methods/test.pdf",
-		  "intro": {"name": "Intructions", "text": "Introductory Text Goes Here"},
+		  "intro": {"name": "Instructions", "text": "Introductory Text Goes Here"},
 		  "combined": {
 			"name": "Objective Rec",
 			"text" : "This Recommended Objectives Map (link) reflects the changes you have made using the sliders in the other tabs. (info button for how changes work)<br><br>Shading within each group indicates the degree of climate risk associated due to exposure and/or sensitivity. Darker shades indicate that the climate risk is low, and actions may have more reliable outcomes. Lighter shades indicate a greater degree of uncertainty due to climate change which should be factored into planning. Our decision support worksheets [link] will help you think about actions to address this risk.<br><br>Maintain: View default for group | Go to Maintain Module | Develop tactics<br>Reduce Threats:View default for group | Go to Reduce Threats Module | Develop tactics<br>Restore:View default for group | Go to Improve Condition Module | Develop tactics<br>Reassess: View default for group | Go to Reassess Module | Develop tactics<br><br>NOTE: When you are done: PLEASE save your resulting map as a hyperlink, or print it, to use it in conjunction with the Guidebook [link] to further hone your conservation strategies, pick places to work, & identify tactics for adapting to climate change.",
