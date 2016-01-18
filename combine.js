@@ -70,7 +70,7 @@ define([
 						rf0.functionName = "Local";
 						rf0.functionArguments = {
 						  "Operation" : 28,
-						  "Rasters" : [rasterFunction0, 75]
+						  "Rasters" : [rasterFunction0, 67]
 						};
 						rf0.variableName = "riskOutput";
 						rf0.outputPixelType = "U16";									
@@ -105,14 +105,14 @@ define([
 						rf1h.variableName = "riskOutput";
 						rf1h.outputPixelType = "U16";
 
-						rf1l = new RasterFunction();
-						rf1l.functionName = "Local";
-						rf1l.functionArguments = {
-						  "Operation" : 28,
-						  "Rasters" : [rasterFunction1, 67]
-						};
-						rf1l.variableName = "riskOutput";
-						rf1l.outputPixelType = "U16";
+						//rf1l = new RasterFunction();
+						//rf1l.functionName = "Local";
+						//rf1l.functionArguments = {
+						//  "Operation" : 28,
+						//  "Rasters" : [rasterFunction1, 67]
+						//};
+						//rf1l.variableName = "riskOutput";
+						//rf1l.outputPixelType = "U16";
 						
 
 						//rft = new RasterFunction();
@@ -281,7 +281,7 @@ define([
 			
 			//case when (" + formulas[3] + " > 50) then 1 else 0 end * 1
 
-			outq = "SELECT " + oFields + ", (case when (" + formulas[0] + " > 75) then 1 else 0 end * 1000) + (case when (" + formulas[0] + " > 75) then case when (" + formulas[1] + " > 33) then 1 else 0 end else case when (" + formulas[1] + " > 67) then 1 else 0 end end * 100) + (case when (" + formulas[2] + " > 50) then 1 else 0 end * 10) + (case when (" + formulas[3] + " > 50) then 1 else 0 end * 1) AS score FROM " + geo.dataset;
+			outq = "SELECT " + oFields + ", (case when (" + formulas[0] + " > 67) then 1 else 0 end * 1000) + (case when (" + formulas[1] + " > 33) then 1 else 0 end * 100) + (case when (" + formulas[2] + " > 50) then 1 else 0 end * 10) + (case when (" + formulas[3] + " > 50) then 1 else 0 end * 1) AS score FROM " + geo.dataset;
 
 			console.log(outq);
 
