@@ -23,7 +23,7 @@
 				"name": "Condition",
 				"sliderLabels" : ["None","Low","Med","High","V.High"],
 				"colorRamp": [[1, 255, 255, 155], [2, 157,243,58], [3, 114,204,138], [4, 81,145,182], [5, 58,77,159]],
-				"inputRanges" : [0,20,21,40,41,60,61,80,81,100],
+				"inputRanges" : [0,20,20,40,40,60,60,80,80,100],
 				"outputValues" : [1,2,3,4,5],
 				"items": [	{
 								"text": "<b>Current Condition Indicators:</b>",
@@ -91,7 +91,7 @@
 				"name": "Threat",
 				"sliderLabels" : ["None","Low","Med","High","V.High"],
 				"colorRamp": [[1, 255, 255, 155], [2, 157,243,58], [3, 114,204,138], [4, 81,145,182], [5, 58,77,159]],
-				"inputRanges" : [0,20,21,40,41,60,61,80,81,100],
+				"inputRanges" : [0,20,20,40,40,60,60,80,80,100],
 				"outputValues" : [1,2,3,4,5],
 				"items": [	{
 								"text": "<b>Future Threat Indicators:</b>",
@@ -148,7 +148,7 @@
 				"name": "Sensitivity",
 				"sliderLabels" : ["None","Low","Med","High","V.High"],
 				"colorRamp": [[1, 255, 255, 155], [2, 157,243,58], [3, 114,204,138], [4, 81,145,182], [5, 58,77,159]],
-				"inputRanges" : [0,20,21,40,41,60,61,80,81,100],
+				"inputRanges" : [0,20,20,40,40,60,60,80,80,100],
 				"outputValues" : [1,2,3,4,5],
 				"items": [	{
 								"text": "<b>Climate Change Exposure Indicators:</b>",
@@ -216,7 +216,7 @@
 				"name": "Exposure",
 				"sliderLabels" : ["None","Low","Med","High","V.High"],
 				"colorRamp": [[1, 255, 255, 155], [2, 157,243,58], [3, 114,204,138], [4, 81,145,182], [5, 58,77,159]],
-				"inputRanges" : [0,20,21,40,41,60,61,80,81,100],
+				"inputRanges" : [0,20,20,40,40,60,60,80,80,100],
 				"outputValues" : [1,2,3,4,5],
 				"items": [	{
 								"text": "<b>Climate Change Sensitivity Indicators:</b>",
