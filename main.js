@@ -746,7 +746,7 @@ define([
 					SyncButton = new ToggleButton({
 						label: "Sync Maps",
 						checked: false,
-						style:  "float:left !important;",
+						style:  "float:left !important; display:none;",
 						onClick: lang.hitch(this, this.syncMaps)
 						});
 						
