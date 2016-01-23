@@ -1,3 +1,8 @@
+// Pull in your favorite version of jquery 
+require({ 
+	packages: [{ name: "jquery", location: "http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/", main: "jquery.min" }] 
+});
+
 define([
         "dojo/_base/declare",
 		"framework/PluginBase",
@@ -211,60 +216,9 @@ define([
 						
 				mapObject.addLayer(TempcurrentLayer);
 	
-	
-		/*
-				var myLine ={geometry:{"paths":[[[-91.40625,6.328125],[6.328125,19.3359375]]],
-					"spatialReference":{"wkid":4326}},
-					"symbol":{"color":[0,0,0,255],"width":1,"type":"esriSLS","style":"esriSLSSolid"}};
-				  var gra= new Graphic(myLine);
-				  
-				  mapObject.graphics.add(gra);
-		
-				
-				mapObject.addLayer(this.currentLayer);
-	
-				// create and add the layer  
-				var mil = new MapImageLayer({  
-				  'id': 'overLay'  
-				});  
-				mapObject.addLayer(mil);  
-							
-				  var mi = new MapImage({
-					'extent': this.currentExtent,
-					'href': this.currentSRC
-				});
-				
-				console.log(mi)
-				
- 
-				mil.addImage(mi);  
-				/*
-				
-				
-				/*
-				// Add hexagons
-				var layer = new esri.layers.ArcGISDynamicMapServiceLayer(this.url);
-				layer.setVisibleLayers([0])
-				mapObject.addLayer(layer);
-				// Add map graphics (selected hexagon) 
-				mapObject.graphics.add(new esri.Graphic(this.fc.graphics[0].geometry, this.fc.graphics[0].symbol ));
-				// Update data filters section next to printed map
-				// Species Name and Taxon: if no filter add -
-				var sn = this.config.tsFilters[0]
-				var ta = this.config.tsFilters[1]
-				if (sn.length == 0){sn = "-"}
-				if (ta.length == 0){ta = "-"}
-				$('#' + this.appDiv.id + 'psSN').html(sn);
-				$('#' + this.appDiv.id + 'psTa').html(ta);
-				// Other filters: if no filter add -
-				$.each(this.config.filter, lang.hitch(this,function(i,v){
-					var val = v.text.toString();
-					if (val.length == 0){val ="-"}	
-					$('#' + this.appDiv.id + 'ps' + v.field).html(val)
-				}))
-				*/
-				// Add content to printed page
-				$printArea.append("<div id='title'>NY Combine Explorer Report</div>");
+
+				console.log($printArea);
+				$printArea.append("<div id='title' style='float:right'> NY Combine Habitat Report</div>");
 
                 printDeferred.resolve();
             },
