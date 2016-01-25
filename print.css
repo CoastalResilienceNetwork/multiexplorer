@@ -34,6 +34,19 @@
 	
 	#title{
 	   visibility: visible;
+	   font-size: 40px;
+	}
+	
+	#table{
+	   visibility: visible;
+	}
+	
+	#tableWrapper{
+	   visibility: visible;
+	}
+	
+	#tableTitle{
+	   visibility: visible;
 	}
 	
 }

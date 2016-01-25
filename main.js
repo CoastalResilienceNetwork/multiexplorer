@@ -219,7 +219,22 @@ define([
 	
 
 				console.log($printArea);
-				$printArea.append("<div id='title' style='float:right'> NY Combine Habitat Report</div>");
+				$printArea.append("<div id='title'> NY Combine Habitat Report</div>");
+				
+				array.forEach(this.geography.tabs, lang.hitch(this,function(tab, i){
+				
+					console.log(tab);
+					array.forEach(tab.items, lang.hitch(this,function(item, i){
+					
+						console.log(item.text, item.default);
+					
+					
+					}));
+				
+				
+				}));
+				
+				$printArea.append("<div id='tableWrapper'><div id='tableTitle'>Species with Suitable Habitat in Hexagon</div><table id='table' class='printTable'>");
 
                 printDeferred.resolve();
             },
