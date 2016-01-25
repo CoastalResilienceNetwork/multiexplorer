@@ -166,6 +166,7 @@ define([
 			   usePrintPreviewMap: true, 
 			   previewMapSize: [1000, 600],
 			   subs: false,
+			   updated: false,
 
 			beforePrint: function(printDeferred, $printArea, mapObject) {
 				
@@ -1558,7 +1559,7 @@ define([
 			   updateService: function(zoomto) {
 				   
 				   
-				   
+				    
 				   this.legendContainer.innerHTML  = ""
 
 					if (zoomto == undefined) {
@@ -1571,7 +1572,7 @@ define([
 					
 					selectedIndex = this.tabpan.selectedChildWidget.index;
 					
-					if (selectedIndex > -1) {
+					//if ((selectedIndex > -1)  && (this.updated == true)) {
 						
 					try {
 						its = this.geography.tabs[selectedIndex].items;
@@ -1581,6 +1582,7 @@ define([
 					}
 			
 					this.currentLayer.show();
+					this.updated = true;
 				
 					//perhaps this needs to be done sometime but it appears to work now.
 					//formget = lang.hitch(this,this.getFormula(selectedIndex))
@@ -1651,7 +1653,7 @@ define([
 						//query.maxAllowableOffset = 10000;
 
 						//domAttr.set(this.refreshnode, "style", "display:");
-
+						
 						queryTask.execute(query, lang.hitch(this,function(results) {this.showResults(results)}));
 
 
@@ -1811,11 +1813,11 @@ define([
 
 					}
 					
-					} else {
+					//} //else {
 						
-						this.currentLayer.hide();
+						//this.currentLayer.hide();
 						
-					}
+					//}
 			   },
 
 			   zoomQextent: function(results) {
