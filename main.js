@@ -1164,12 +1164,12 @@ define([
 						this.tabpan.addChild(this.sliderpane);						
 			}
 				
-				if (geography.combined.selected == true) {
+			//	if (geography.combined.selected == true) {
 				
 				
 		//			this.tabpan.selectChild(this.sliderpane);
 				
-				}
+			//	}
 			
 				
 
@@ -1482,6 +1482,8 @@ define([
 	
 			   doCombined: function() {
 				   
+				   //this.currentLayer.show();
+				   this.currentLayer.setVisibility(true);
 				   this.legendContainer.innerHTML  = ""
 				   
 					formulas = new Array();
@@ -1585,8 +1587,16 @@ define([
 
 					console.log(this.sliders)
 					
+					try {
 					selectedIndex = this.tabpan.selectedChildWidget.index;
+					orgselectedIndex = this.tabpan.selectedChildWidget.index;
 					
+					} catch(err) {
+						
+					selectedIndex = 0
+					orgselectedIndex = 0
+					
+					}
 					//if ((selectedIndex > -1)  && (this.updated == true)) {
 						
 					try {
@@ -1596,7 +1606,8 @@ define([
 						its = this.geography.items
 					}
 			
-					this.currentLayer.show();
+					//this.currentLayer.show();
+					this.currentLayer.setVisibility(true);
 					this.updated = true;
 				
 					//perhaps this needs to be done sometime but it appears to work now.
@@ -1814,25 +1825,57 @@ define([
 
              }));
 
+			 if ( this.geography.outputLabels == undefined) {
+				 
+				 this.geography.outputLabels = [{text:"Low", "percent": "0"},{text:"Medium", "percent": "50"},{text:"High", "percent": "100"}]
+				 
+			 //} else {
+				 
+			 }	 
+				 
+			// }
+			
+
+			 
              lh = ((lcolorRamp.length) * 30) + 10
-             maxy = ((lcolorRamp.length) * 30) - 15
-					   this.legendContainer.innerHTML = '<div style="margin-bottom:7px">' + this.toolbarName + '</div>'
-             + '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100px" height="' + lh + '">'
-             + innerSyms
-             + '<text x="35" y="15" fill="black">Low</text>'
-             + '<text x="35" y="' + ((maxy + 15) / 2) + '" fill="black">Medium</text>'
-             + '<text x="35" y="' + maxy + '" fill="black">High</text></svg>'
+             maxy = ((lcolorRamp.length) * 30) - 30
+
+			labs = ""
+			
+			array.forEach(this.geography.outputLabels, lang.hitch(this,function(lab, i){
+				console.log(lab);
+				labs = labs + '<text x="35" y="' +((maxy * (lab.percent / 100))  + 15) + '" fill="black">' + lab.text + '</text>'
+				
+			}));
+			 
+			 console.log(labs)
+			 
+			this.legendContainer.innerHTML = '<div style="margin-bottom:7px">' + this.toolbarName + '</div>'
+             + '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="500px" height="' + lh + '">'
+             + innerSyms + labs
+			 
+			 
+             //+ '<text x="35" y="15" fill="black">Low</text>'
+             //+ '<text x="35" y="' + ((maxy + 15) / 2) + '" fill="black">Medium</text>'
+             //+ '<text x="35" y="' + maxy + '" fill="black">High</text></svg>'
 
 					   //noleg = dom.byId("legend-0_msg")
 					   //domStyle.set(noleg, "display", "none");
 
 					}
 					
-					//} //else {
+					if (orgselectedIndex > -1) {
+					
+						//this.currentLayer.show();
+						this.currentLayer.setVisibility(true);
+					
+					} else {
 						
 						//this.currentLayer.hide();
+						this.currentLayer.setVisibility(false);
+						//setTimeout(lang.hitch(this,function() {this.currentLayer.hide();}), 500);
 						
-					//}
+					}
 			   },
 
 			   zoomQextent: function(results) {
