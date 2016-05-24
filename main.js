@@ -616,6 +616,9 @@ define([
 			
 			}));			
 			
+			this.tabpan.selectedChildWidget.index = activeIndex;
+			
+			this.updateService();
 			
 			//ActualTabs
 			//alert(activeIndex);
@@ -698,6 +701,9 @@ define([
 									this.Radios.appendChild(domConstruct.create('span', {innerHTML: tab.name + "<br>"}));
 
 								}));
+								
+							this.tabpan.selectedChildWidget = {index: 0}
+							
 
 						} else {
 						
@@ -804,25 +810,29 @@ define([
 					}
 					
 					if (geography.tabs.length > 1) {
-						CombineButton = new ToggleButton({
-							label: "View Combined Score",
-							checked: false,
-							style:  "float:right !important;"//,
-							//onClick: function(){window.open(geography.methods)}
-							});
+						
+					  if (geography.tabtype != "radio") {
+						  
+							CombineButton = new ToggleButton({
+								label: "View Combined Score",
+								checked: false,
+								style:  "float:right !important;"//,
+								//onClick: function(){window.open(geography.methods)}
+								});
 
-						//this.buttonpane.domNode.appendChild(CombineButton.domNode);
+							//this.buttonpane.domNode.appendChild(CombineButton.domNode);
+							
+							//CombineButton.startup();
+							
+						resetButton = new Button({
+							label: "Reset Tab",
+							style:  "float:left !important;",
+							title: "Resets sliders to defaults (all Medium) for just the currently open tab.",
+							onClick: lang.hitch(this, this.resetTab)
+							});
 						
-						//CombineButton.startup();
-						
-					resetButton = new Button({
-						label: "Reset Tab",
-						style:  "float:left !important;",
-						title: "Resets sliders to defaults (all Medium) for just the currently open tab.",
-						onClick: lang.hitch(this, this.resetTab)
-						});
-					
-					ulnode.appendChild(resetButton.domNode);
+						ulnode.appendChild(resetButton.domNode);
+					  }
 					
 					}
 					
@@ -1272,7 +1282,6 @@ define([
 				this.tabpan.startup();
 				
 				
-				
 					if (this.isVector == true)  {
 
 						this.currentLayer = new ArcGISDynamicMapServiceLayer(geography.url);
@@ -1351,7 +1360,7 @@ define([
 
 						}
 
-
+					this.changeRadio();
 
 					this.resize();
 					
@@ -1688,11 +1697,30 @@ define([
 					this.formula = this.getFormula(selectedIndex);
 					
 					console.log(this.formula);
-					
+
+					  if (this.geography.tabs[selectedIndex].colorRamp == undefined) {
+						lcolorRamp = this.geography.colorRamp;
+					  } else {
+						lcolorRamp = this.geography.tabs[selectedIndex].colorRamp;
+					  }
+					  
+					  if (this.geography.tabs[selectedIndex].inputRanges == undefined) {
+						linputRanges = this.geography.inputRanges;
+					  } else {
+						linputRanges = this.geography.tabs[selectedIndex].inputRanges;
+					  }
+
+					  if (this.geography.tabs[selectedIndex].outputValues == undefined) {
+						loutputValues = this.geography.outputValues;
+					  } else {
+						loutputValues = this.geography.tabs[selectedIndex].outputValues;
+					  }	  					
 
 					if (this.isVector == true)  {
 
 						indFields = []
+						
+						legIndexes = [0,1,2];
 
 						array.forEach(its, lang.hitch(this,function(item, i){
 
@@ -1808,6 +1836,8 @@ define([
 
 					} else {
 
+						legIndexes = [1,2,3]
+						
 					    if (zoomto == true) {
 							this.map.setExtent(this.currentLayer.fullExtent, true);
 						}
@@ -1836,27 +1866,7 @@ define([
 //	}
 //			);
 
-		//alert(this.formula);
-
-	  if (this.geography.tabs[selectedIndex].colorRamp == undefined) {
-		lcolorRamp = this.geography.colorRamp;
-	  } else {
-		lcolorRamp = this.geography.tabs[selectedIndex].colorRamp;
-	  }
-	  
-	  if (this.geography.tabs[selectedIndex].inputRanges == undefined) {
-		linputRanges = this.geography.inputRanges;
-	  } else {
-		linputRanges = this.geography.tabs[selectedIndex].inputRanges;
-	  }
-
-	  if (this.geography.tabs[selectedIndex].outputValues == undefined) {
-		loutputValues = this.geography.outputValues;
-	  } else {
-		loutputValues = this.geography.tabs[selectedIndex].outputValues;
-	  }	  
-	  
-	  
+		//alert(this.formula);  
 		
       if (this.formula == "") {this.formula = "(B1 * 0)"};
 	  
@@ -1890,10 +1900,13 @@ define([
 
 					   //legenddiv = domConstruct.create("img", {src:"height:400px", innerHTML: "<b>" + "Legend for Restoration"  + ":</b>"});
 					   //dom.byId(this.legendContainer).appendChild(this.legenddiv);
+					   
+					}
+					
              innerSyms = ""
              array.forEach(lcolorRamp, lang.hitch(this,function(cColor, i){
 
-               innerSyms = innerSyms + '<rect x="0" y ="'+ (i * 30) + '" width="30" height="20" style="fill:rgb('+ cColor[1] + "," + cColor[2] + "," + cColor[3] + ');stroke-width:0;stroke:rgb(0,0,0)" />'
+               innerSyms = innerSyms + '<rect x="0" y ="'+ (i * 30) + '" width="30" height="20" style="fill:rgb('+ cColor[legIndexes[0]] + "," + cColor[legIndexes[1]] + "," + cColor[legIndexes[2]] + ');stroke-width:0;stroke:rgb(0,0,0)" />'
 
 
              }));
@@ -1935,7 +1948,7 @@ define([
 					   //noleg = dom.byId("legend-0_msg")
 					   //domStyle.set(noleg, "display", "none");
 
-					}
+					
 					
 					if (orgselectedIndex > -1) {
 					
