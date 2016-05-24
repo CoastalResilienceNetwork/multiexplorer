@@ -935,7 +935,7 @@ define([
 							style:"padding: 8px",
 						//  style:"height:" + this.sph + "px !important",
 						  "data-pane": "ActualTabs",
-						  style: "display: none",
+						  //style: "display: none",
 						  title: tab.name,
 						  "data-index": t,
 						  index: t
@@ -1360,7 +1360,9 @@ define([
 
 						}
 
-					this.changeRadio();
+					if (geography.tabtype == "radio") {
+					 this.changeRadio();
+					}
 
 					this.resize();
 					
