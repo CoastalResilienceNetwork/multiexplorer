@@ -584,6 +584,42 @@ define([
 
         },
 
+		changeRadio: function() {
+			
+			//var points = [];
+			
+			allRads = dojoquery("[name=RadiotabGroup]");
+			AllTabs = dojoquery("[data-pane=ActualTabs]");
+			
+			//console.log(AllTabs);
+			
+			activeIndex = 0;
+			
+			array.forEach(allRads, lang.hitch(this,function(rad, t){
+				
+				myWidget = dijit.byId(rad);
+				if (myWidget.checked) { activeIndex = t };
+			
+			}));
+			
+			array.forEach(AllTabs, lang.hitch(this,function(rad, t){
+				
+				myWidget = dijit.byId(rad);
+				hh = domAttr.get(myWidget, "data-index");
+				if (hh == activeIndex) {
+					domAttr.set(myWidget, "style", "display:");
+					console.log(hh) ;
+				} else {
+					domAttr.set(myWidget, "style", "display:none");
+				}
+				
+			
+			}));			
+			
+			
+			//ActualTabs
+			//alert(activeIndex);
+		},
 		
 		changeGeography: function(geography, zoomto) {
 
@@ -632,13 +668,47 @@ define([
 
 					} else {
 						
-						this.tabpan = new TabContainer({
-							//style: "height: 100%; width: 100%;"
-						});
+						if (geography.tabtype == "radio") {
+
+							this.tabpan = new ContentPane({
+								style:"padding: 8px"
+								//style: "height: 100%; width: 100%;"
+							});	
+
+							this.Radios = domConstruct.create("div");
+							dom.byId(this.tabpan.domNode).appendChild(this.Radios);
+								
+							array.forEach(geography.tabs, lang.hitch(this,function(tab, t){
+							
+								RadioNode = domConstruct.create("div");
+								this.Radios.appendChild(RadioNode);
+								
+									if (t == 0) {sel = true} else {sel = false};
+					
+									radioControl = new RadioButton({
+											name: "RadiotabGroup",
+											value: true,
+											index: t,
+											order: 0,
+											title: tab.name,
+											checked: sel,
+											onChange: lang.hitch(this,function(){this.changeRadio()}),
+											}, RadioNode);
+
+									this.Radios.appendChild(domConstruct.create('span', {innerHTML: tab.name + "<br>"}));
+
+								}));
+
+						} else {
 						
+							this.tabpan = new TabContainer({
+								//style: "height: 100%; width: 100%;"
+							});
+						
+						}
 						//this.tabpan.layout = function() {console.log('layout')};
 
-					}
+					} 
 					
 					
 					//this.sliderpane = new ContentPane({
@@ -839,9 +909,10 @@ define([
 						this.sliderpane = new ContentPane({
 							style:"padding: 8px",
 						//  style:"height:" + this.sph + "px !important",
-						//style: "height: 100%; width: 100%;",
+						  style: "display: none",
 						  title: geography.intro.name,
 						  index: -1,
+						  "data-index": -1,
 						  content: geography.intro.text
 						});	
 
@@ -853,8 +924,10 @@ define([
 						this.sliderpane = new ContentPane({
 							style:"padding: 8px",
 						//  style:"height:" + this.sph + "px !important",
-						//style: "height: 100%; width: 100%;",
+						  "data-pane": "ActualTabs",
+						  style: "display: none",
 						  title: tab.name,
+						  "data-index": t,
 						  index: t
 						});	
 
@@ -1155,7 +1228,7 @@ define([
 						this.sliderpane = new ContentPane({
 							style:"padding: 8px",
 						//  style:"height:" + this.sph + "px !important",
-						//style: "height: 100%; width: 100%;",
+						  style: "display: none",
 						  title: geography.combined.name,
 						  index: geography.tabs.length,
 						  content: geography.combined.text
