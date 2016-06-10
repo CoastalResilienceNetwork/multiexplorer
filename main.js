@@ -124,7 +124,9 @@ define([
 
 			if (_infographic != undefined) {
 
-				_infographic = localrequire.toUrl("./" + _infographic);
+				if (_infographic.slice(_infographic.length - 4, _infographic.length) == ".jpg" || _infographic.slice(_infographic.length - 4, _infographic.length) == ".png") {
+					_infographic = localrequire.toUrl("./" + _infographic);
+				} 
 
 			}
 			
