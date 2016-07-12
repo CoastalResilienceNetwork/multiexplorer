@@ -293,7 +293,7 @@ define([
 
 
                hibernate: function () {
-
+				   
 			   //what is used to do
 
 					if (this.currentLayer != undefined)  {
@@ -341,8 +341,7 @@ define([
 				      this.button.set("label",_ddText);
         }
 
-				//this._hasactivated = false;
-
+				this._hasactivated = false;
 				this.explorerObject = dojo.eval("[" + explorer + "]")[0];
 
 			   },
@@ -1636,7 +1635,7 @@ define([
 						
 						//alert('');
 						
-						rfout = this.combiner.combineFunction(formulas);
+						rfout = this.combiner.combineFunction(formulas, this.geography);
 					
 						
 						//rfout = poopy.combine;
@@ -1684,12 +1683,15 @@ define([
 					
 					}
 					//if ((selectedIndex > -1)  && (this.updated == true)) {
-						
+					regfixname = " - " + this.geography.name
+					
 					try {
 						its = this.geography.tabs[selectedIndex].items;
+						ctabname = " <br> Score for " + this.geography.tabs[selectedIndex].name;
 					} catch(err) {
 						selectedIndex = 0;
 						its = this.geography.items
+						ctabname = "";
 					}
 			
 					//this.currentLayer.show();
@@ -1940,7 +1942,7 @@ define([
 			 
 			 console.log(labs)
 			 
-			this.legendContainer.innerHTML = '<div style="margin-bottom:7px">' + this.toolbarName + '</div>'
+			this.legendContainer.innerHTML = '<div style="margin-bottom:7px">' + this.toolbarName + regfixname + ctabname + '</div>'
              + '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="500px" height="' + lh + '">'
              + innerSyms + labs
 			 
