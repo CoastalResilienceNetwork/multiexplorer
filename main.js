@@ -242,7 +242,7 @@ define([
             },
 
         activate: function () {
-			
+
 			this.combiner = new combine();
 
 					if (this.currentLayer != undefined)  {
@@ -688,7 +688,7 @@ define([
 								this.Radios.appendChild(RadioNode);
 								
 									if (t == 0) {sel = true} else {sel = false};
-					
+
 									radioControl = new RadioButton({
 											name: "RadiotabGroup",
 											value: true,
@@ -1660,8 +1660,7 @@ define([
 
 			   updateService: function(zoomto) {
 				   
-				   
-				    
+
 				   this.legendContainer.innerHTML  = ""
 
 					if (zoomto == undefined) {
@@ -1960,13 +1959,17 @@ define([
 					
 						//this.currentLayer.show();
 						this.currentLayer.setVisibility(true);
-					
+
+						this.legendContainer.innerHTML = '<div style="margin-bottom:7px">' + this.toolbarName + regfixname + ctabname + '</div>'
+						+ '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="500px" height="' + lh + '">'
+						+ innerSyms + labs
+						
 					} else {
 						
 						//this.currentLayer.hide();
 						this.currentLayer.setVisibility(false);
 						//setTimeout(lang.hitch(this,function() {this.currentLayer.hide();}), 500);
-						
+						this.legendContainer.innerHTML = ''
 					}
 			   },
 
