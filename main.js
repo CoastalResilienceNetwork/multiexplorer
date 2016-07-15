@@ -2161,38 +2161,27 @@ define([
 			   },
 
 			   identify: function(point, screenPoint, processResults) {
-
-
-				   identifyer = new esri.tasks.IdentifyTask(this.currentLayer.url, { source: this.layerSource });
-				   identifyParams = new IdentifyParameters();
-				   identifyParams.dynamicLayerInfos = this.dli;
-				   identifyParams.tolerance = 3;
-					identifyParams.returnGeometry = false;
-					identifyParams.layerIds = [0,1];
-					identifyParams.layerOption = esri.tasks.IdentifyParameters.LAYER_OPTION_ALL;
-					identifyParams.width  = this.map.width;
-					identifyParams.height = this.map.height;
-					identifyParams.mapExtent = this.map.extent;
-					identifyParams.geometry = point;
-
-				   identifyer.execute(identifyParams, lang.hitch(this,function(identifyResults) {
-						processResults("<br> Computed Score at Mouse Click: <b>" + identifyResults[0].feature.attributes.score);
-				   }));
-
-
-/* 				   idTask = new esri.tasks.ImageServiceIdentifyTask(this.geography.url);
+		
+//require([
+//  "esri/tasks/ImageServiceIdentifyTask", ... 
+//], function(ImageServiceIdentifyTask, ... ) {
+//  var imageTask = new ImageServiceIdentifyTask("http://sampleserver6.arcgisonline.com/arcgis/rest/services/CharlotteLAS/ImageServer");
+//  ...
+//});
+				if (this.currentLayer.url.includes("ImageServer") == true) {
+					
+				   idTask = new esri.tasks.ImageServiceIdentifyTask(this.geography.url);
 				   identifyParams = new ImageServiceIdentifyParameters();
 				   identifyParams.returnGeometry = false;
 				   identifyParams.geometry = point;
-				   //identifyParams.renderingRule = this.renderingRule;
-
-
+				   //identifyParams.renderingRule = this.renderingRule;					
 				   idTask.execute(identifyParams, lang.hitch(this,function(identifyResults) {
 
 								if (identifyResults.value != "NoData") {
 
 									idtable = '<br><table border="1"><tr><th width="50%"><center>Variable</center></th><th width="25%"><center>Value</center></th><th width="25%"><center>Weight</center></th></tr>'
 
+									console.log(identifyResults.value);
 									identifyValues = dojo.eval("[" + identifyResults.value + "]")
 
 									replacedFormula = this.formula;
@@ -2204,6 +2193,8 @@ define([
 
 										array.forEach(this.sliders, lang.hitch(this,function(slid, i){
 											ci = j+1;
+											
+
 
 											if (slid.value == 0) {
 												outvaluetext = "Not Included";
@@ -2218,8 +2209,13 @@ define([
 											}
 
 											if (ci == slid.index.replace("B","")) {
+												
+												if (this.formula.includes("B"+(j+1))) {
+													//alert(slid.title);
+												
 													idtable = idtable + ('</tr><tr><td>' + slid.title + '</td><td>' + idval.toFixed(2).replace(".00","") + '</td><td>' + outvaluetext + '</td></tr>')
 													varFormula = varFormula.replace("B"+(j+1), slid.title);
+												}
 											}
 
 										}));
@@ -2240,8 +2236,31 @@ define([
 
 								}
 
-								})); */
+								})); 
+				
+				} else {
 
+				   identifyer = new esri.tasks.IdentifyTask(this.currentLayer.url, { source: this.layerSource });
+				   identifyParams = new IdentifyParameters();
+				   identifyParams.dynamicLayerInfos = this.dli;
+				   identifyParams.tolerance = 3;
+					identifyParams.returnGeometry = false;
+					identifyParams.layerIds = [0,1];
+					identifyParams.layerOption = esri.tasks.IdentifyParameters.LAYER_OPTION_ALL;
+					identifyParams.width  = this.map.width;
+					identifyParams.height = this.map.height;
+					identifyParams.mapExtent = this.map.extent;
+					identifyParams.geometry = point;
+					
+					console.log(this.currentLayer.url);
+
+				   identifyer.execute(identifyParams, lang.hitch(this,function(identifyResults) {
+					   console.log(identifyResults);
+						processResults("<br> Computed Score at Mouse Click: <b>" + identifyResults[0].feature.attributes.score);
+				   }));
+
+				}  
+				   
 					//console.log(point)
 					//console.log(screenPoint)
 
