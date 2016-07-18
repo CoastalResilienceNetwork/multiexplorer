@@ -1701,8 +1701,7 @@ define([
 					//formget = lang.hitch(this,this.getFormula(selectedIndex))
 					this.formula = this.getFormula(selectedIndex);
 					
-					console.log(this.formula);
-
+					
 					  if (this.geography.tabs[selectedIndex].colorRamp == undefined) {
 						lcolorRamp = this.geography.colorRamp;
 					  } else {
@@ -1873,25 +1872,75 @@ define([
 
 		//alert(this.formula);  
 		
-      if (this.formula == "") {this.formula = "(B1 * 0)"};
-	  
-			rasterFunction.functionName = "BandArithmetic";
-						arguments = {"Raster" : "$$"};
-						arguments.Method= 0;
-						arguments.BandIndexes = this.formula;
-						rasterFunction.arguments = arguments;
-						rasterFunction.variableName = "riskOutput";
-            rasterFunction.outputPixelType = "U8";
+      if (this.formula == "") {this.formula = "(B1 * 0)"; this.BandFormula[0] = "(B1 * 0)"};
 
+
+			//console.log(this.BandFormula[0][0]);
+			console.log(this.GroupTotals);
+
+			bf = this.BandFormula[0]
+
+			bffs = new Array();
+			
+			for(var i=0; i<bf.length; i++){
+			
+				rasterFunction.functionName = "BandArithmetic";
+							arguments = {"Raster" : "$$"};
+							arguments.Method= 0;
+							arguments.BandIndexes = bf[i]  //this.formula;
+							rasterFunction.arguments = arguments;
+							rasterFunction.variableName = "L" + i;
+				rasterFunction.outputPixelType = "U16";
+
+				bffs.push(lang.clone(rasterFunction));
+				console.log(bf[i]);
+				
+			}
+			
+			//if (bffs.length == 1) {
+
+				rfout = bffs[0];			
+
+			//} else {
+
+			for(var i=0; i<(bffs.length -1); i++){
+				
+				console.log(bffs[i+1])
+				
+				rft = new RasterFunction();
+				rft.functionName = "Local";
+				rft.functionArguments = {
+				  "Operation" : 1,
+				  "Rasters" : [rfout, bffs[i+1]]
+				};
+				rft.variableName = "T" + i;
+				rft.outputPixelType = "U16";				
+			
+				rfout = lang.clone(rft)
+
+			}
+			
+			rf1h3 = new RasterFunction();
+			rf1h3.functionName = "Local";
+			rf1h3.functionArguments = {
+			  "Operation" : 23,
+			  "Rasters" : [rfout, this.GroupTotals[0]]
+			};
+			rf1h3.variableName = "riskOutput";
+			rf1h3.outputPixelType = "u16";	
+			
             rf = new RasterFunction();
             rf.functionName = "Remap";
             rf.functionArguments = {
               "InputRanges" : linputRanges,
               "OutputValues" : loutputValues,
-              "Raster" : rasterFunction
+              "Raster" : rf1h3
             };
             rf.variableName = "riskOutput";
             rf.outputPixelType = "U8";
+			
+			console.log('howdy');
+			//console.log(rf1h2);
 
             colorRF = new RasterFunction();
             colorRF.functionName = "Colormap";
