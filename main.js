@@ -113,6 +113,7 @@ define([
 					registry,
 					localrequire,
 					combine,
+					//printer,
 					
 					explorer
 					) {
@@ -150,7 +151,16 @@ define([
 				_noZoom = false;
 
 			}
-			
+
+			if (_config.hasCustomPrint != undefined) {
+
+				_hasCustomPrint = _config.hasCustomPrint;
+
+			} else {
+
+				_hasCustomPrint = false;
+
+			}			
 
 
 
@@ -164,7 +174,7 @@ define([
 			   height: _config.pluginHeight,
 			   width: _config.pluginWidth,
 			   stateRestore: false,
-			   hasCustomPrint: true, 
+			   hasCustomPrint: _hasCustomPrint, 
 			   usePrintPreviewMap: true, 
 			   previewMapSize: [1000, 600],
 			   subs: false,

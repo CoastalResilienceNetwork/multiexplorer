@@ -8,6 +8,7 @@
     "averageGroups": true,
 	"pluginWidth": 500,
     "pluginHeight": 520,
+	"hasCustomPrint": true,
 	"noZoom": true,
     "regions": [
         {
