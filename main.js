@@ -262,7 +262,7 @@ define([
 				//alert(this.BandFormulaText);
 
 				console.log($printArea);
-				$printArea.append("<div id='title'>" + this.geography.printTitle + "</div>");
+				$printArea.append("<div id='printtitle'>" + this.geography.printTitle + "</div>");
 				
 				array.forEach(this.geography.tabs, lang.hitch(this,function(tab, i){
 				

@@ -34,7 +34,7 @@
 	
 	h1 {page-break-after: always;}
 	
-	#title{
+	#printtitle{
 	   visibility: visible;
 	   font-size: 80px;
 	   position:absolute;
