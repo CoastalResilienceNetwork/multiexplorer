@@ -152,9 +152,9 @@ define([
 
 			}
 
-			if (_config.hasCustomPrint != undefined) {
+			if (_config.enableCustomPrint != undefined) {
 
-				_hasCustomPrint = _config.hasCustomPrint;
+				_hasCustomPrint = _config.enableCustomPrint;
 
 			} else {
 
@@ -176,7 +176,7 @@ define([
 			   stateRestore: false,
 			   hasCustomPrint: _hasCustomPrint, 
 			   usePrintPreviewMap: true, 
-			   previewMapSize: [1000, 600],
+			   previewMapSize: [900, 500],
 			   subs: false,
 			   updated: false,
 
@@ -224,14 +224,45 @@ define([
 						colorRF = dojo.clone(this.currentLayer.renderingRule);
 						
 						TempcurrentLayer.setRenderingRule(colorRF);
+						
+					
+									/*
+									array.forEach(identifyValues, lang.hitch(this,function(idval, j){
+
+										replacedFormula = replacedFormula.replace("B"+(j+1), idval);
+									*/
+
+									/*
+									}));
+
+									//alert(dojo.eval(replacedFormula))
+
+									console.log(identifyResults);
+
+									idtable = idtable + '</table>'
+
+									processResults("<br> Value at Mouse Click: <b>" + dojo.eval(replacedFormula).toFixed(3).replace(".000", '') + "</b><br>" + idtable + "Formula: <br>" + varFormula);
+									
+									*/
 				
 					} 
 						
 				mapObject.addLayer(TempcurrentLayer);
-	
+
+				replacedFormula = this.formula;
+				varFormula = this.formula;
+
+					array.forEach(this.sliders, lang.hitch(this,function(slid, i){
+						
+						console.log(slid.title);
+						varFormula = varFormula.replace("B"+(i+1) +")", slid.title + ")")
+						
+					}));
+				
+				//alert(this.BandFormulaText);
 
 				console.log($printArea);
-				$printArea.append("<div id='title'> NY Combine Habitat Report</div>");
+				$printArea.append("<div id='title'>" + this.geography.printTitle + "</div>");
 				
 				array.forEach(this.geography.tabs, lang.hitch(this,function(tab, i){
 				
@@ -246,9 +277,24 @@ define([
 				
 				}));
 				
-				$printArea.append("<div id='tableWrapper'><div id='tableTitle'>Species with Suitable Habitat in Hexagon</div><table id='table' class='printTable'>");
+				leg = this.legendContainer.innerHTML;
+				
+				a = domGeom.position(dojoquery('#mExplorerLegend' + "_" + this.map.id)[0])
+				
+				console.log(a)
+				
+				//legs = domGeom.position(leg)
+				
+				//console.log(legs);
+				
+				//$printArea.append("<div id='tableWrapper'><div id='tableTitle'>Species with Suitable Habitat in Hexagons" + leg + "</div><table id='table' class='printTable'>");
 
+				$printArea.append("<div id='legendprint' >" + leg + "</div>");
+				
+				$printArea.append("<div id='formulaprint'>" + "Forumla for Map: <br><br>" + this.geography.BandFormulaText + "</div>");
+				
                 printDeferred.resolve();
+				
             },
 
         activate: function () {
@@ -1493,6 +1539,7 @@ define([
 				
 					this.BandFormula = new Array();
 					this.GroupTotals = new Array();
+					this.BandFormulaNames = new Array();
 
 					cgroup = "";
 
@@ -1505,10 +1552,12 @@ define([
 							if (cgroup != "") {
 
 								this.BandFormula.push(cbf)
+								this.BandFormulaNames.push(cbfnames)
 								this.GroupTotals.push(hottytot)
 							}
 
 							cbf = new Array();
+							cbfnames = new Array();
 							hottytot = 0;
 
 							cgroup = entry.name;
@@ -1524,7 +1573,7 @@ define([
 						}
 					  
 
-            console.log("WW%%%%",this.geography, entry, entry.value, entry.order)
+            console.log("###### RR", entry)
 
 			
 			
@@ -1533,6 +1582,7 @@ define([
 
 						if (entry.value > 0) {
 							cbf.push("(" + entry.value + " * " + entry.index + ")");
+							cbfnames.push("(" + entry.value + " * " + entry.title + ")");
               //hottytot.push(entry.value)
               hottytot = hottytot + entry.value;
 						}
@@ -1553,9 +1603,11 @@ define([
 					}));
 
 					this.BandFormula.push(cbf);
+					this.BandFormulaNames.push(cbfnames);
 					this.GroupTotals.push(hottytot);
 
 					outform = new Array();
+					outformName = new Array();
 
 					array.forEach(this.BandFormula, lang.hitch(this,function(bgroup, i){
 
@@ -1570,6 +1622,26 @@ define([
 
 					//alert(this.BandFormula.join(" + "));
 					
+					array.forEach(this.BandFormulaNames, lang.hitch(this,function(bgroup, i){
+
+					 if (this.explorerObject.averageGroups == true) {
+						  if (bgroup.length > 0) {
+							outformName.push("((" + bgroup.join(" + ") + ") / " + this.GroupTotals[i] + ")");
+						  }
+					  } else {
+						outformName.push("(" + bgroup.join(" + ") + ")");
+					  }
+					}));
+					
+					
+					if (this.geography.tabs[selectedIndex].name != undefined) {
+						outforme = this.geography.tabs[selectedIndex].name;
+					} else {
+						outforme = "Data Layer"
+					}
+					
+					this.geography.BandFormulaText = outforme + " = " + outformName.join(" " + this.explorerObject.betweenGroups + " ");
+					
 					return outform.join(" " + this.explorerObject.betweenGroups + " ");
 
 				
@@ -1582,18 +1654,20 @@ define([
 				   this.legendContainer.innerHTML  = ""
 				   
 					formulas = new Array();
+					Tformulas = new Array();
 				   
 					array.forEach(this.geography.tabs, lang.hitch(this,function(tab, t){
 						formula = this.getFormula(t);
 						formulas.push(formula);
+						Tformulas.push(this.geography.BandFormulaText);
 					}));
 					
-					console.log(formulas);
+					console.log(Tformulas);
 					
 					if (this.isVector == true)  {
 						
 
-						rfout = this.combiner.vectorCombineFunction(formulas, this.geography);
+						rfout = this.combiner.vectorCombineFunction(formulas, this.geography, Tformulas);
 						
 
 						//console.log("SELECT " + oFields + ", " + rfout + " AS score FROM " + this.geography.dataset);
@@ -1606,7 +1680,7 @@ define([
 						var dataSource = new esri.layers.QueryDataSource();
 						dataSource.workspaceId = this.geography.workspaceId;
 						dataSource.geometryType = this.geography.geometryType;
-						dataSource.query = rfout[0]; //"SELECT " + oFields + ", " + rfout + " AS score FROM " + this.geography.dataset;
+						dataSource.query = rfout.outquery; //"SELECT " + oFields + ", " + rfout + " AS score FROM " + this.geography.dataset;
 						dataSource.oidFields = ["objectid"]
 
 						//minquery = "SELECT " + this.formula + " AS score FROM " + this.geography.dataset
@@ -1625,11 +1699,12 @@ define([
 						var layerDrawingOptions = [];
 						var layerDrawingOption = new esri.layers.LayerDrawingOptions();
 
-						layerDrawingOption.renderer = rfout[1];
+						layerDrawingOption.renderer = rfout.renderRule;
 
 						layerDrawingOptions[1] = layerDrawingOption;
 						this.currentLayer.setLayerDrawingOptions(layerDrawingOptions);
 
+						this.legendContainer.innerHTML = '<div id="mExplorerLegend' + "_" + this.map.id + '">' + rfout.legendHTML + "</div>"
 						
 						//alert('');
 						//var queryTask = new QueryTask(this.currentLayer.url + "/dynamicLayer", { source: this.layerSource });
@@ -1645,7 +1720,7 @@ define([
 						
 						//alert('');
 						
-						rfout = this.combiner.combineFunction(formulas, this.geography);
+						rfout = this.combiner.combineFunction(formulas, this.geography, Tformulas);
 					
 						
 						//rfout = poopy.combine;
@@ -1660,7 +1735,7 @@ define([
 						};
 						*/
 						
-						this.legendContainer.innerHTML = rfout.legendHTML
+						this.legendContainer.innerHTML = '<div id="mExplorerLegend' + "_" + this.map.id + '">' + rfout.legendHTML + "</div>"
 						this.currentLayer.setRenderingRule(rfout.renderRule);
 						
 						
@@ -1992,15 +2067,17 @@ define([
 
 			labs = ""
 			
+			
+			
 			array.forEach(this.geography.outputLabels, lang.hitch(this,function(lab, i){
 				console.log(lab);
 				labs = labs + '<text x="35" y="' +((maxy * (lab.percent / 100))  + 15) + '" fill="black">' + lab.text + '</text>'
-				
+
 			}));
 			 
 			 console.log(labs)
 			 
-			this.legendContainer.innerHTML = '<div style="margin-bottom:7px">' + this.toolbarName + regfixname + ctabname + '</div>'
+			this.legendContainer.innerHTML = '<div style="margin-bottom:7px" id="mExplorerLegend' + "_" + this.map.id + '">' + this.toolbarName + regfixname + ctabname + '</div>'
              + '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="500px" height="' + lh + '">'
              + innerSyms + labs
 			 
@@ -2019,7 +2096,7 @@ define([
 						//this.currentLayer.show();
 						this.currentLayer.setVisibility(true);
 
-						this.legendContainer.innerHTML = '<div style="margin-bottom:7px">' + this.toolbarName + regfixname + ctabname + '</div>'
+						this.legendContainer.innerHTML = '<div style="margin-bottom:7px" id="mExplorerLegend' + "_" + this.map.id + '">' + this.toolbarName + regfixname + ctabname + '</div>'
 						+ '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="500px" height="' + lh + '">'
 						+ innerSyms + labs
 						
@@ -2287,7 +2364,7 @@ define([
 
 									idtable = idtable + '</table>'
 
-									processResults("<br> Value at Mouse Click: <b>" + dojo.eval(replacedFormula).toFixed(3).replace(".000", '') + "</b><br>" + idtable + "Formula: <br>" + varFormula);
+									processResults("<br> Value at Mouse Click: <b>" + dojo.eval(replacedFormula).toFixed(3).replace(".000", '') + "</b><br>" + idtable + "Formula: <br>" + this.geography.BandFormulaText);
 
 								} else {
 
