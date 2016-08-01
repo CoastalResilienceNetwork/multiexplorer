@@ -291,7 +291,7 @@ define([
 
 				$printArea.append("<div id='legendprint' >" + leg + "</div>");
 				
-				$printArea.append("<div id='formulaprint'>" + "Forumla for Map: <br><br>" + this.geography.BandFormulaText + "</div>");
+				$printArea.append("<div id='formulaprint'>" + "Formula for Map: <br><br>" + this.geography.BandFormulaText + "</div>");
 				
                 printDeferred.resolve();
 				
