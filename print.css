@@ -2,7 +2,7 @@
 	
 	@page { 
         size: landscape;
-		margin: 13mm 13mm 13mm 13mm;
+		margin-left: 40px;
     }
 	
 	tr.tablesorter-filter-row, .chosen-container{
@@ -10,16 +10,15 @@
 	}
 	
     #plugin-print-preview-map {
-		-webkit-transform: scale(2.1);
-		transform-style: scale(2.1);
+		-webkit-transform: scale(2);
+		transform-style: scale(2);
         visibility: visible;
-		width:900px;
+		width:750px;
 		height:500px;
-		margin-left:50px;
 		position:absolute;
 		-webkit-transform-origin: left top;
-		top:120px;
-		left:0px;		
+		top:100px;
+		left:350px;		
     }	
 	
 	.pt{
@@ -37,11 +36,11 @@
 	
 	#printtitle{
 	   visibility: visible;
-	   font-size: 80px;
+	   font-size: 60px;
 	   position:absolute;
 	   top:0px;
-	   left:48px;
-	   width:2500px;
+	   left:0px;
+	   width:2000px;
 	}
 	
 	#table{
@@ -50,21 +49,21 @@
 	
 	#legendprint{
 	   visibility: visible;
-		top:120px;
-		left:2000px;	
+		top:100px;
+		left:0px;
 		position:absolute;
 		-webkit-transform-origin: left top;
-		-webkit-transform: scale(3);
-		transform-style: scale(3);
+		-webkit-transform: scale(1.2);
+		transform-style: scale(1.2);
 	}
 	
 	#formulaprint{
 	   visibility: visible;
-		top:1200px;
-		left:48px;	
+		top:1100px;
+		left:0px;	
 		width:1800px;
 		position:absolute;
-		font-size: 40px;
+		font-size: 20px;
 	}
 	
 	#tableWrapper{

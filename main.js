@@ -176,7 +176,7 @@ define([
 			   stateRestore: false,
 			   hasCustomPrint: _hasCustomPrint, 
 			   usePrintPreviewMap: true, 
-			   previewMapSize: [900, 500],
+			   previewMapSize: [800, 500],
 			   subs: false,
 			   updated: false,
 
@@ -433,6 +433,8 @@ define([
 
 				initialize: function (frameworkParameters) {
 
+					//domConstruct.create("div", { innerHTML: "hi" }, win.body(), "first");
+				
 					declare.safeMixin(this, frameworkParameters);
 
 					domClass.add(this.container, "claro");
