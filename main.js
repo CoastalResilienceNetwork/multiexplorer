@@ -176,7 +176,7 @@ define([
 			   stateRestore: false,
 			   hasCustomPrint: _hasCustomPrint, 
 			   usePrintPreviewMap: true, 
-			   previewMapSize: [800, 500],
+			   previewMapSize: [750, 500],
 			   subs: false,
 			   updated: false,
 
@@ -934,13 +934,13 @@ define([
 
 						    var trslider = new HorizontalSlider({
 								name: "slider",
-								value: 1,
+								value: 0,
 								minimum: 0,
 								maximum: 1,
 								showButtons: false,
 								intermediateChanges: true,
 								style: "width:100px;",
-								onChange: lang.hitch(this,function(e) {this.currentLayer.setOpacity(e)})
+								onChange: lang.hitch(this,function(e) {this.currentLayer.setOpacity(1-e)})
 							})
 
 							mainchecknodetext = domConstruct.create("span", {style:"float:left !important;", innerHTML: this.explorerObject.mainToggle.text });
