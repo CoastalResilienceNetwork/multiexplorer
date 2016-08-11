@@ -23,6 +23,7 @@
 		  "tabs": [
 			{
 				"name": "Condition",
+				"hoverText" : "Description of Condition Here",
 				"sliderLabels" : ["None","Low","Med","High","V.High"],
 				"colorRamp": [[1, 255, 255, 155], [2, 157,243,58], [3, 114,204,138], [4, 81,145,182], [5, 58,77,159]],
 				"inputRanges" : [0,20,20,40,40,60,60,80,80,100],

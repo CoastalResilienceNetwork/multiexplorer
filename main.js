@@ -939,11 +939,11 @@ define([
 								maximum: 1,
 								showButtons: false,
 								intermediateChanges: true,
-								style: "width:100px;",
+								style: "width:200px;margin-top:20px",
 								onChange: lang.hitch(this,function(e) {this.currentLayer.setOpacity(1-e)})
 							})
 
-							mainchecknodetext = domConstruct.create("span", {style:"float:left !important;", innerHTML: this.explorerObject.mainToggle.text });
+							mainchecknodetext = domConstruct.create("span", {style:"float:left !important; margin-top:10px", innerHTML: this.explorerObject.mainToggle.text });
 							llnode.appendChild(mainchecknodetext);
 							llnode.appendChild(trslider.domNode);							
 						
@@ -990,12 +990,14 @@ define([
 					
 			array.forEach(geography.tabs, lang.hitch(this,function(tab, t){
 
+					if (tab.hoverText == undefined) { tab.hoverText = "" }
+			
 						this.sliderpane = new ContentPane({
 							style:"padding: 8px",
 						//  style:"height:" + this.sph + "px !important",
 						  "data-pane": "ActualTabs",
 						  //style: "display: none",
-						  title: tab.name,
+						  title: '<span title="' + tab.hoverText + '">' + tab.name + '</span>',
 						  "data-index": t,
 						  index: t
 						});	
