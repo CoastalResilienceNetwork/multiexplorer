@@ -162,11 +162,22 @@ define([
 
 			}			
 
+			if (_config.hoverText != undefined) {
+
+				_hoverText = _config.hoverText;
+
+			} else {
+
+				_hoverText = "";
+
+			}
+			
 
 
            return declare(PluginBase, {
 		       toolbarName: _config.name,
                toolbarType: "sidebar",
+			   fullName: _hoverText,
 			   showServiceLayersInLegend: true,
                allowIdentifyWhenActive: true,
 			   _hasactivated: false,
@@ -370,7 +381,10 @@ define([
 				if (this.ancillaryLayer != undefined) {
 					  this.map.removeLayer(this.ancillaryLayer)
 				}
-
+				
+				if (this.introLayer != undefined) {
+					  this.map.removeLayer(this.introLayer)
+				}
 
 			    this.sliders = new Array();
 
@@ -390,6 +404,8 @@ define([
 				if (this.buttonpane != undefined) {
 					this.tabpan.destroy();
 				}
+				
+
 
 				domStyle.set(this.textnode, "display", "");
 
@@ -442,8 +458,6 @@ define([
 					this.explorerObject = dojo.eval("[" + explorer + "]")[0];
 
 					this.spinnerURL = localrequire.toUrl("./images/spinner.gif");
-
-					console.log(this.explorerObject);
 					
 					this.ResetObject = lang.clone(this.explorerObject);
 
@@ -985,7 +999,17 @@ define([
 						  content: geography.intro.text
 						});	
 
-						this.tabpan.addChild(this.sliderpane);						
+						this.tabpan.addChild(this.sliderpane);	
+						
+						this.introLayer = new ArcGISDynamicMapServiceLayer(geography.intro.layer.url,{
+								useMapImage: true
+								}
+							  );
+
+						this.introLayer.setVisibleLayers(geography.intro.layer.show)
+
+						this.map.addLayer(this.introLayer);
+						
 			}					
 					
 			array.forEach(geography.tabs, lang.hitch(this,function(tab, t){
@@ -1322,6 +1346,25 @@ define([
 
 					
 						selindex = o[0].index;
+						
+						if (selindex != -1) {
+						
+							if (this.introLayer != undefined) {
+								  this.map.removeLayer(this.introLayer)
+							}
+							
+						} else {
+						
+							this.introLayer = new ArcGISDynamicMapServiceLayer(geography.intro.layer.url,{
+									useMapImage: true
+									}
+								  );
+
+							this.introLayer.setVisibleLayers(geography.intro.layer.show)
+
+							this.map.addLayer(this.introLayer);						
+							
+						}
 
 						if (selindex == geography.tabs.length) {
 
