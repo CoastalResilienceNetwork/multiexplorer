@@ -339,6 +339,7 @@ define([
 
           if (this._hasactivated == false) {
 
+			console.log("GEO")
             console.log(this.geography)
             this.rebuildOptions();
             this.changeGeography(this.geography, false);
@@ -454,6 +455,8 @@ define([
 					declare.safeMixin(this, frameworkParameters);
 
 					domClass.add(this.container, "claro");
+					
+					domClass.add(this.container, "plugin-multiExplorer");
 
 					this.explorerObject = dojo.eval("[" + explorer + "]")[0];
 
@@ -508,6 +511,7 @@ define([
 						domStyle.set(this.infoarea.domNode, 'display', 'none');
 					}));
 
+					$(this.printButton).hide();
 
 				},
 
@@ -739,9 +743,11 @@ define([
 							style:"padding: 8px"
 							//style: "height: 100%; width: 100%;"
 						});
-
+						
 						this.tabpan.layout = function() {console.log('layout')};
 
+						$(this.printButton).show();
+						
 					} else {
 						
 						if (geography.tabtype == "radio") {
@@ -1346,15 +1352,19 @@ define([
 
 					
 						selindex = o[0].index;
-						
+				
 						if (selindex != -1) {
 						
 							if (this.introLayer != undefined) {
-								  this.map.removeLayer(this.introLayer)
+								  this.map.removeLayer(this.introLayer);
+								  
 							}
 							
+							$(this.printButton).show();
+			
 						} else {
-						
+					
+							$(this.printButton).hide();
 							this.introLayer = new ArcGISDynamicMapServiceLayer(geography.intro.layer.url,{
 									useMapImage: true
 									}
@@ -1433,6 +1443,8 @@ define([
 							//console.log(this.currentLayer.fullExtent)
 							console.log("Update Ended...");
 							domAttr.set(this.refreshnode, "style", "display:none");
+							
+							this.map.resize;
 						} ));
 
 					//this.MainCheck.setChecked(true)
