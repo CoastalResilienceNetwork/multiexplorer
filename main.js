@@ -172,6 +172,15 @@ define([
 
 			}
 			
+			if (_config.showInfoOnStart != undefined) {
+
+				_showOnStart = _config.showInfoOnStart;
+
+			} else {
+
+				_showOnStart = true;
+
+			}
 
 
            return declare(PluginBase, {
@@ -451,6 +460,11 @@ define([
 				initialize: function (frameworkParameters) {
 
 					//domConstruct.create("div", { innerHTML: "hi" }, win.body(), "first");
+					
+
+			
+					//showValueKey = this.toolbarName + " showinfographic";
+				    //localStorage.setItem(showValueKey, _showOnStart);
 				
 					declare.safeMixin(this, frameworkParameters);
 
