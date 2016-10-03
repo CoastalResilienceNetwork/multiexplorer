@@ -660,6 +660,13 @@ define([
 
           }
 
+          if (this.introLayer != undefined) {
+
+            this.map.removeLayer(this.introLayer)
+			this.introLayer = undefined;
+
+          }	
+
           if (this.buttonpane != undefined) {
 
             this.buttonpane.destroy();
@@ -1021,6 +1028,10 @@ define([
 
 						this.tabpan.addChild(this.sliderpane);	
 						
+			}
+			
+			//alert(geography.intro.layer.url)
+						
 						this.introLayer = new ArcGISDynamicMapServiceLayer(geography.intro.layer.url,{
 								useMapImage: true
 								}
@@ -1030,7 +1041,7 @@ define([
 
 						this.map.addLayer(this.introLayer);
 						
-			}					
+								
 					
 			array.forEach(geography.tabs, lang.hitch(this,function(tab, t){
 
@@ -1778,6 +1789,8 @@ define([
 						this.currentLayer.setLayerDrawingOptions(layerDrawingOptions);
 
 						this.legendContainer.innerHTML = '<div id="mExplorerLegend' + "_" + this.map.id + '">' + rfout.legendHTML + "</div>"
+						
+						this.map.resize()
 						
 						//alert('');
 						//var queryTask = new QueryTask(this.currentLayer.url + "/dynamicLayer", { source: this.layerSource });
