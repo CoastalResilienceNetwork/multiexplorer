@@ -1031,6 +1031,7 @@ define([
 			}
 			
 			//alert(geography.intro.layer.url)
+					if (this.introLayer != undefined) {
 						
 						this.introLayer = new ArcGISDynamicMapServiceLayer(geography.intro.layer.url,{
 								useMapImage: true
@@ -1041,6 +1042,7 @@ define([
 
 						this.map.addLayer(this.introLayer);
 						
+					}	
 								
 					
 			array.forEach(geography.tabs, lang.hitch(this,function(tab, t){
