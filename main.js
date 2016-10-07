@@ -1471,7 +1471,7 @@ define([
 							console.log("Update Ended...");
 							domAttr.set(this.refreshnode, "style", "display:none");
 							
-							this.map.resize;
+							this.map.resize();
 						} ));
 
 					//this.MainCheck.setChecked(true)
