@@ -2492,20 +2492,30 @@ define([
 
         getState: function () {
 
-				   state = new Object();
-           state.geography = this.geography;
-           state.mainToggleChecked = 1;
+			//alert(this.geography.name)
+			return this.geography.name
+			
+			//state = new Object();
+           //state.geography = this.geography;
+           //state.mainToggleChecked = 1;
 
-				   return state
+				   //return state
 
 				},
 
 
         setState: function (state) {
 
+			     array.forEach(this.explorerObject.regions, lang.hitch(this,function(region, i){
+					  if (region.name == state) {
+						this.geography = region;
+					  }
+					}));
+		
+		
                  this.stateRestore = true;
-                 this.geography = state.geography;
-                 //state.mainToggleChecked = 1;
+                 //this.geography = state.geography;
+                 state.mainToggleChecked = 1;
 
 				         console.log(state)
 
