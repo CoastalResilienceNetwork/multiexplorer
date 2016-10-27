@@ -724,6 +724,8 @@ define([
 		
 		changeGeography: function(geography, zoomto) {
 
+			ga('send', 'event', this.toolbarName, 'Change Dropdown: ' + geography.name);
+		
            if (geography.dataset == undefined) {
               this.isVector = false;
              } else {
