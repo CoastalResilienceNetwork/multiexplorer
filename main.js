@@ -437,7 +437,7 @@ define([
 
 					if (cdg.h == 0) {
 
-						this.sph = this.height - 155
+						this.sph = this.height - 155;
 
 					} else {
 
@@ -724,7 +724,7 @@ define([
 		
 		changeGeography: function(geography, zoomto) {
 
-			ga('send', 'event', this.toolbarName, 'Change Dropdown: ' + geography.name);
+		   ga('send', 'event', this.toolbarName, 'Change Dropdown: ' + geography.name);
 		
            if (geography.dataset == undefined) {
               this.isVector = false;
@@ -827,7 +827,7 @@ define([
 
 
 					this.buttonpane = new ContentPane({
-					  style:"border-top-style:groove !important; height:80px;overflow: hidden !important;background-color:#F3F3F3 !important;padding:2px !important;", innerHTML: '<table style="width:100%;padding:0; margin:0"><tr><td style="padding:2px; margin:0"></td><td style="padding:2px; margin:0"></td style="padding:2px; margin:0"></tr><tr><td colspan="2" style="padding:2px; margin:0"></td></tr></table>'
+					  style:"border-top-style:groove !important; height:80px;overflow: hidden !important;!important;padding:2px !important;", innerHTML: '<table style="width:100%;padding:0; margin:0"><tr><td style="padding:2px; margin:0"></td><td style="padding:2px; margin:0"></td style="padding:2px; margin:0"></tr><tr><td colspan="2" style="padding:2px; margin:0"></td></tr></table>'
 					});
 
 					dom.byId(this.container).appendChild(this.buttonpane.domNode);
@@ -982,11 +982,11 @@ define([
 								maximum: 1,
 								showButtons: false,
 								intermediateChanges: true,
-								style: "width:200px;margin-top:20px",
+								style: "width:130px;margin-top:20px",
 								onChange: lang.hitch(this,function(e) {this.currentLayer.setOpacity(1-e)})
 							})
 
-							mainchecknodetext = domConstruct.create("span", {style:"float:left !important; margin-top:10px", innerHTML: this.explorerObject.mainToggle.text });
+							mainchecknodetext = domConstruct.create("span", {style:"float:left !important; margin:10px; height: 40px", innerHTML: this.explorerObject.mainToggle.text });
 							llnode.appendChild(mainchecknodetext);
 							llnode.appendChild(trslider.domNode);							
 						
@@ -1481,8 +1481,6 @@ define([
 					//domStyle.set(this.MainCheck.domNode, "display", "");
 
 
-					this.map.addLayer(this.currentLayer);
-
 						if (geography.ancillaryUrl != undefined) {
 
 							this.ancillaryLayer = new ArcGISDynamicMapServiceLayer(geography.ancillaryUrl,{
@@ -1504,6 +1502,8 @@ define([
 							this.map.addLayer(this.ancillaryLayer);
 
 						}
+						
+					this.map.addLayer(this.currentLayer);
 
 					if (geography.tabtype == "radio") {
 					 this.changeRadio();
