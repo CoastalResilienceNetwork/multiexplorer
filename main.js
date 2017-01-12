@@ -1216,7 +1216,8 @@ define([
 								name: this.sliderpane.id + "_" + entry.group,
 								value: entry.default,
 								index: entry.index,
-                order: i,
+								order: i,
+								tabindex: t,
 								minimum: entry.min,
 								maximum: entry.max,
 								title: entry.text,
@@ -1249,6 +1250,7 @@ define([
 							nslidernodeheader = domConstruct.create("div", {style:"margin:3px", innerHTML: ""});
 							this.sliderpane.domNode.appendChild(nslidernodeheader);
 
+							
 							} else {
 					
 
@@ -1344,9 +1346,13 @@ define([
 
 							}
 
-							this.sliders.push(slider);
+						this.sliders.push(slider);	
+						
 
 						}
+
+						
+						
             itemIndex = itemIndex + 1
 					}));
 
@@ -1633,6 +1639,7 @@ define([
 
 					array.forEach(this.sliders, lang.hitch(this,function(entry, i){
 						
+						
 					  if (selectedIndex == entry.tabindex) {
 
 						if (entry.name != cgroup) {
@@ -1699,12 +1706,16 @@ define([
 
 					array.forEach(this.BandFormula, lang.hitch(this,function(bgroup, i){
 
-					 if (this.explorerObject.averageGroups == true) {
+					 withinGroup = this.explorerObject.averageGroups[i];
+					 
+					 if (withinGroup == undefined) { withinGroup = this.explorerObject.averageGroups };
+					 
+					 if (withinGroup == true) {
 						  if (bgroup.length > 0) {
 							outform.push("((" + bgroup.join(" + ") + ") / " + this.GroupTotals[i] + ")");
 						  }
 					  } else {
-						outform.push("(" + bgroup.join(" + ") + ")");
+						outform.push("(" + bgroup.join(" " + withinGroup + " ") + ")");
 					  }
 					}));
 
@@ -1712,12 +1723,16 @@ define([
 					
 					array.forEach(this.BandFormulaNames, lang.hitch(this,function(bgroup, i){
 
-					 if (this.explorerObject.averageGroups == true) {
+					 withinGroup = this.explorerObject.averageGroups[i];
+					 
+					 if (withinGroup == undefined) { withinGroup = this.explorerObject.averageGroups };
+					
+					 if (withinGroup == true) {
 						  if (bgroup.length > 0) {
 							outformName.push("((" + bgroup.join(" + ") + ") / " + this.GroupTotals[i] + ")");
 						  }
 					  } else {
-						outformName.push("(" + bgroup.join(" + ") + ")");
+						outformName.push("(" + bgroup.join(" " + withinGroup + " ") + ")");
 					  }
 					}));
 					
@@ -1875,7 +1890,7 @@ define([
 					//perhaps this needs to be done sometime but it appears to work now.
 					//formget = lang.hitch(this,this.getFormula(selectedIndex))
 					this.formula = this.getFormula(selectedIndex);
-					
+					 console.log(this.formula);
 					
 					  if (this.geography.tabs[selectedIndex].colorRamp == undefined) {
 						lcolorRamp = this.geography.colorRamp;
@@ -2052,9 +2067,25 @@ define([
 
 			//console.log(this.BandFormula[0][0]);
 			console.log(this.GroupTotals);
+		//op = 1	
+		
+		groupers = new Array();
+		
+		array.forEach(this.BandFormula, lang.hitch(this,function(bf, i){
 
-			bf = this.BandFormula[0]
+		 withinGroup = this.explorerObject.averageGroups[i];
 
+		 if (withinGroup == undefined) { withinGroup = this.explorerObject.averageGroups };
+		
+		 if (withinGroup == true) {op = 1};
+		 if (withinGroup == false) {op = 1};
+		 if (withinGroup == "*") {op = 3};
+		 if (withinGroup == "+") {op = 1};
+		 if (withinGroup == "-") {op = 2};
+		 if (withinGroup == "/") {op = 23};
+	
+		//	bf = this.BandFormula[1]  // <--- this is just getting the first group
+		
 			bffs = new Array();
 			
 			for(var i=0; i<bf.length; i++){
@@ -2078,44 +2109,80 @@ define([
 
 			//} else {
 
-			for(var i=0; i<(bffs.length -1); i++){
+			for(var j=0; j<(bffs.length -1); j++){
 				
-				console.log(bffs[i+1])
+				console.log(bffs[j+1])
 				
 				rft = new RasterFunction();
 				rft.functionName = "Local";
 				rft.functionArguments = {
-				  "Operation" : 1,
-				  "Rasters" : [rfout, bffs[i+1]]
+				  "Operation" : op,
+				  "Rasters" : [rfout, bffs[j+1]]
 				};
-				rft.variableName = "T" + i;
+				rft.variableName = "T" + j;
 				rft.outputPixelType = "U16";				
 			
 				rfout = lang.clone(rft)
 
 			}
+	
+			if (withinGroup == true) {
+	
+				rf1h3 = new RasterFunction();
+				rf1h3.functionName = "Local";
+				rf1h3.functionArguments = {
+				  "Operation" : 23,
+				  "Rasters" : [rfout, this.GroupTotals[0]]
+				};
+				rf1h3.variableName = "riskOutput";
+				rf1h3.outputPixelType = "U16";	
+				
+				groupers.push(lang.clone(rf1h3));
+				
+			} else {
+				
+				groupers.push(rfout);
+				
+			}
+		
+		}));
+
+		 if (this.explorerObject.betweenGroups == true) {opp = 1};
+		 if (this.explorerObject.betweenGroups == false) {opp = 1};
+		 if (this.explorerObject.betweenGroups == "*") {opp = 3};
+		 if (this.explorerObject.betweenGroups == "+") {opp = 1};
+		 if (this.explorerObject.betweenGroups == "-") {opp = 2};
+		 if (this.explorerObject.betweenGroups == "/") {opp = 23};
+
+		  gout = groupers[0];
+		 console.log(groupers);
+			for(var i=0; i<(groupers.length -1); i++){
+			  if (groupers[i+1] != undefined) {
+				rft = new RasterFunction();
+				rft.functionName = "Local";
+				rft.functionArguments = {
+				  "Operation" : opp,
+				  "Rasters" : [gout, groupers[i+1]]
+				};
+				rft.variableName = "G" + i;
+				rft.outputPixelType = "U16";				
 			
-			rf1h3 = new RasterFunction();
-			rf1h3.functionName = "Local";
-			rf1h3.functionArguments = {
-			  "Operation" : 23,
-			  "Rasters" : [rfout, this.GroupTotals[0]]
-			};
-			rf1h3.variableName = "riskOutput";
-			rf1h3.outputPixelType = "u16";	
-			
+				gout = lang.clone(rft)
+			  }
+			}
+		
             rf = new RasterFunction();
             rf.functionName = "Remap";
             rf.functionArguments = {
               "InputRanges" : linputRanges,
               "OutputValues" : loutputValues,
-              "Raster" : rf1h3
+              "Raster" : gout
             };
             rf.variableName = "riskOutput";
             rf.outputPixelType = "U8";
 			
 			console.log('howdy');
-			//console.log(rf1h2);
+			console.log(rf);
 
             colorRF = new RasterFunction();
             colorRF.functionName = "Colormap";
