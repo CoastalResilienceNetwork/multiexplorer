@@ -311,7 +311,7 @@ define([
 
 				$printArea.append("<div id='legendprint' >" + leg + "</div>");
 				
-				$printArea.append("<div id='formulaprint'>" + "Formula for Map: <br><br>" + this.geography.BandFormulaText + "</div>");
+				$printArea.append("<div id='formulaprint'>" + "Formula for Map: <br><br>" + this.geography.BandFormulaText + this.geography.printText + "</div>");
 				
                 printDeferred.resolve();
 				
@@ -1355,11 +1355,12 @@ define([
 
 			if (geography.combined != undefined) {
 				
+				if (geography.combined.hoverText == undefined) {geography.combined.hoverText ==""}
 						this.sliderpane = new ContentPane({
 							style:"padding: 8px",
 						//  style:"height:" + this.sph + "px !important",
 						  style: "display: none",
-						  title: geography.combined.name,
+						  title: '<span title="' + geography.combined.hoverText + '">' + geography.combined.name + '</span>',
 						  index: geography.tabs.length,
 						  content: geography.combined.text
 						});	
