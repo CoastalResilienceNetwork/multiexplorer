@@ -6,6 +6,7 @@ require({
 define([
         "dojo/_base/declare",
 		"framework/PluginBase",
+		"./resources/chosen.jquery",
 
 		"esri/request",
 		"esri/layers/ArcGISDynamicMapServiceLayer",
@@ -59,11 +60,13 @@ define([
 		"dijit/registry",
 		"require",
 		"./combine",
-		"dojo/text!./explorer.json"
+		"dojo/text!./explorer.json",
+		"xstyle/css!./resources/chosen.css"
 
        ],
        function (declare,
 					PluginBase,
+					chosen,
 					ESRIRequest,
 					ArcGISDynamicMapServiceLayer,
 					ArcGISImageServiceLayer,
@@ -191,8 +194,8 @@ define([
                allowIdentifyWhenActive: true,
 			   _hasactivated: false,
 			   infoGraphic: _infographic, //"plugins/restoration_explorer/RestorationExplorer_c.jpg",
-			   height: _config.pluginHeight,
-			   width: _config.pluginWidth,
+			   //height: _config.pluginHeight,
+			   //width: _config.pluginWidth,
 			   stateRestore: false,
 			   hasCustomPrint: _hasCustomPrint, 
 			   usePrintPreviewMap: true, 
@@ -317,9 +320,8 @@ define([
 				
             },
 
-        activate: function () {
-
-			this.combiner = new combine();
+        activate: function () {		
+				this.combiner = new combine();
 
 					if (this.currentLayer != undefined)  {
 
@@ -416,7 +418,6 @@ define([
 				}
 				
 
-
 				domStyle.set(this.textnode, "display", "");
 
         if (this.button != undefined) {
@@ -430,9 +431,11 @@ define([
 
 			     resize: function(w, h) {
 
+					cdg = domGeom.position(dojoquery(this.container).parent()[0]);
+					
 					domStyle.set(this.container, 'overflow', 'hidden');
 				 
-					cdg = domGeom.position(this.container);
+					//cdg = domGeom.position(this.container);
 
 
 					if (cdg.h == 0) {
@@ -441,16 +444,18 @@ define([
 
 					} else {
 
-						this.sph = cdg.h-116;   //73 
+						this.sph = cdg.h-170;   //73 
 
 					}
+				  //this.sliderpane
+				  //this.sliderpane.resize({"w" : 500, "h" : this.sph})
 
 					
 				  //if (this.tabpan != undefined) {
 					//	domStyle.set(this.tabpan.domNode, "height", this.sph + "px");
 				  //}
 				  
-				  this.tabpan.resize({"w" : cdg.w, "h" : this.sph})
+				  this.tabpan.resize({"w" : 376, "h" : this.sph})
 				  
 				  this.tabpan.layout();
 
@@ -465,11 +470,16 @@ define([
 			
 					//showValueKey = this.toolbarName + " showinfographic";
 				    //localStorage.setItem(showValueKey, _showOnStart);
+					
+                self = this;
+				tool = this;
+
+
 				
 					declare.safeMixin(this, frameworkParameters);
 
 					domClass.add(this.container, "claro");
-					
+					domClass.add(this.container, "cr-dojo-dijits");
 					domClass.add(this.container, "plugin-multiExplorer");
 
 					this.explorerObject = dojo.eval("[" + explorer + "]")[0];
@@ -491,6 +501,11 @@ define([
 
 					nslidernode = domConstruct.create("span");
 					dom.byId(this.container).appendChild(nslidernode);
+					
+						
+					 //.removeClass( "sidebar-content" )
+					
+					//domStyle.set(, 'height', '300px');
 
           this.ddNode = domConstruct.create("span");
           dom.byId(this.container).appendChild(this.ddNode);
@@ -533,27 +548,12 @@ define([
 
           domConstruct.empty(this.ddNode);
 
+		  /*
           menu = new DropDownMenu({ style: "display: none;"});
 
 					domClass.add(menu.domNode, "claro");
 
 					array.forEach(this.usableRegions, lang.hitch(this,function(entry, i){
-
-/* 						layersRequest = esri.request({
-						  url: entry.url,
-						  content: { f: "json" },
-						  handleAs: "json",
-						  callbackParamName: "callback"
-						});
-
-						layersRequest.then(
-						  lang.hitch(entry,function(response) {
-							console.log(response);
-							this.data = response;
-						}), function(error) {
-							alert("Error loading Restoration Dashboard Layers, Check to make sure service(s) are on.");
-						}); */
-
 
 
 						menuItem1 = new MenuItem({
@@ -574,8 +574,71 @@ define([
 					});
 
 					dom.byId(this.ddNode).appendChild(this.button.domNode);
+					
+			*/	
 
 
+
+				
+					
+
+					outerBox = $('<div class="eeheader" />').appendTo($(this.ddNode));
+					s = $('<select class="chosenDD chosen-select mainChosen" id=expGeoSelect" data-placeholder="' + _config.ddText + '" />')
+
+					$('<option />', {value: "", text: ""}).appendTo(s);
+					
+					selIndex = -1;
+					
+					for(var reg in this.usableRegions) {
+						region = this.usableRegions[reg];
+						$('<option />', {value: region.name, text: region.name}).appendTo(s);
+						if (region.selected == true) {
+							selIndex = reg;
+						}
+					}
+					
+					if (this.usableRegions.length == 1) {
+						selIndex = 0;
+						this.usableRegions.selected = true;
+					}
+					
+					console.log(this.container);
+					s.appendTo(outerBox);	
+
+					ch = $(".chosenDD")
+					
+					ch.chosen({disable_search_threshold: 10})
+					//.change($.proxy(function(val) {
+					//  this.changeGeo(val);
+					//}, this));
+
+					//$("#eeGeoSelect_" + this.map.id).css("width", "220px");
+					$("#expGeoSelect__chosen").css("width", "220px");	
+					
+
+					//eeGeoSelect_map_0_chosen
+					ch.on('chosen:hiding_dropdown', lang.hitch(this, function(e,ob) 
+					
+					{
+						regy = ob.chosen.selected_item[0].innerText;
+						
+						reseter = lang.clone(this.ResetObject);
+						
+						
+						array.forEach(reseter.regions, lang.hitch(this,function(reg, t){
+
+						  if ($.trim(reg.name) == $.trim(regy)) {
+							  outreg = reg;
+							  
+						  }
+						
+						}));
+											
+						this.changeGeography(outreg, false);
+						
+					}));	
+					
+					
         },
 		
 		resetAll: function() {
@@ -1002,7 +1065,7 @@ define([
 
 					}
 
-					this.button.set("label",geography.name);
+					//this.button.set("label",geography.name);
 
 					ancillaryon = new Array();
 
@@ -1019,7 +1082,7 @@ define([
 			if (geography.intro != undefined) {
 				
 						this.sliderpane = new ContentPane({
-							style:"padding: 8px",
+						//	style:"padding: 8px",
 						//  style:"height:" + this.sph + "px !important",
 						  style: "display: none",
 						  title: geography.intro.name,
@@ -1052,8 +1115,8 @@ define([
 					if (tab.hoverText == undefined) { tab.hoverText = "" }
 			
 						this.sliderpane = new ContentPane({
-							style:"padding: 8px",
-						//  style:"height:" + this.sph + "px !important",
+						//	style:"padding: 8px",
+						  //style:"width:344px !important",
 						  "data-pane": "ActualTabs",
 						  //style: "display: none",
 						  title: '<span title="' + tab.hoverText + '">' + tab.name + '</span>',
