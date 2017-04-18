@@ -14,9 +14,7 @@
 	margin-top:5px; margin-bottom:5px; padding-right:5px;
 }
 /* fix the accordion height issue in Safari */
-.sidebar-content{
-	height:auto !important;
-}
+
 /* bring in from old app */
 
 /* OSP graph */

@@ -430,7 +430,7 @@ define([
 			   },
 
 			     resize: function(w, h) {
-
+					
 					cdg = domGeom.position(dojoquery(this.container).parent()[0]);
 					
 					domStyle.set(this.container, 'overflow', 'hidden');
@@ -458,6 +458,8 @@ define([
 				  this.tabpan.resize({"w" : 376, "h" : this.sph})
 				  
 				  this.tabpan.layout();
+				  
+				  
 
 				 },
 
@@ -881,7 +883,7 @@ define([
 
 					} 
 					
-					
+					this.resize();
 					//this.sliderpane = new ContentPane({
 					  //style:"height:" + this.sph + "px;border-top-style:groove !important"
 					//});
@@ -1000,7 +1002,7 @@ define([
 					  }
 					
 					}
-					
+					this.resize();
 					resetAllButton = new Button({
 						label: "Reset All",
 						style:  "float:left !important;",
@@ -1443,7 +1445,7 @@ define([
 				
 					aspect.after(this.tabpan, "selectChild", lang.hitch(this,function (e, o) {
 
-					
+					this.resize();
 						selindex = o[0].index;
 				
 						if (selindex != -1) {
@@ -1533,6 +1535,7 @@ define([
 						} ));
 
 					dojo.connect(this.currentLayer, "onUpdateEnd", lang.hitch(this,function () {
+						
 							//console.log(this.currentLayer.fullExtent)
 							console.log("Update Ended...");
 							domAttr.set(this.refreshnode, "style", "display:none");
