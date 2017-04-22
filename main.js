@@ -457,7 +457,7 @@ define([
 				  
 				  this.tabpan.resize({"w" : 376, "h" : this.sph})
 				  
-				  this.tabpan.layout();
+				  //this.tabpan.layout();
 				  
 				  
 
