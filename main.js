@@ -321,6 +321,7 @@ define([
             },
 
         activate: function () {		
+
 				this.combiner = new combine();
 
 					if (this.currentLayer != undefined)  {
@@ -455,9 +456,9 @@ define([
 					//	domStyle.set(this.tabpan.domNode, "height", this.sph + "px");
 				  //}
 				  
-				  this.tabpan.resize({"w" : 376, "h" : this.sph})
+				  this.tabpan.resize({"w" : '100%', "h" : this.sph})
 				  
-				  this.tabpan.layout();
+				  //this.tabpan.layout();
 				  
 				  
 
@@ -636,7 +637,7 @@ define([
 						
 						}));
 											
-						this.changeGeography(outreg, false);
+						this.changeGeography(outreg, true);
 						
 					}));	
 					
