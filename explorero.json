@@ -133,7 +133,7 @@
 			],
       "name": "Subtidal Shoreline Oyster Reefs",
 	  "printTitle": "North Carolina - Subtidal Oyster Reef Restoration Explorer",
-      "url": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/Restoration_Explorer_Subtidal_Shoreline_Oyster_Reefs/ImageServer",
+      "url": "http://dev.services.coastalresilience.org:6080/arcgis/rest/services/rasterExplorer/NC_Rest_Explorer_NEW/ImageServer",
       "methods": "https://ow-maps.s3.amazonaws.com/ncexplorer/NC_Restoration_Explorer_Methods.pdf",
       "colorRamp": [[1, 255, 255, 129], [2, 204, 255, 51], [3, 76, 190, 110], [4, 13, 31, 133], [5, 150, 150, 150]],
       "inputRanges" : [-32768,10,10,20,20,30,30,101,101,32767],
@@ -142,15 +142,11 @@
         },
         {
             "items": [	{
-							"text": "<br><a href='http://media.coastalresilience.org/NC/RestExpl_Expert_Opinion.pdf' target='_blank' >Default Settings Based on <b>Expert Opinion</b></a>",
-							"type": "text"
-						},
-	       				{
 							"text": "<b>Threshold Layers (weight):</b>",
 							"type": "text"
 						},
 						{
-							"default": 7,
+							"default": 5,
 							"group": "w",
 							"index": "B14",
 							"max": 10,
@@ -161,7 +157,7 @@
 							"type": "layer"
 						},
 						{
-							"default": 6,
+							"default": 5,
 							"group": "w",
 							"index": "B15",
 							"max": 10,
@@ -183,7 +179,7 @@
 							"type": "layer"
 						},
 						{
-							"default": 3,
+							"default": 5,
 							"group": "w",
 							"index": "B11",
 							"max": 10,
@@ -194,7 +190,7 @@
 							"type": "layer"
 						},
 						{
-							"default": 2,
+							"default": 5,
 							"group": "w",
 							"index": "B10",
 							"max": 10,
@@ -205,7 +201,7 @@
 							"type": "layer"
 						},
 						{
-							"default": 2,
+							"default": 5,
 							"group": "w",
 							"index": "B9",
 							"max": 10,
@@ -216,7 +212,7 @@
 							"type": "layer"
 						},
 						{
-							"default": 2,
+							"default": 5,
 							"group": "w",
 							"index": "B13",
 							"max": 10,
@@ -227,7 +223,7 @@
 							"type": "layer"
 						},
 						{
-							"default": 2,
+							"default": 5,
 							"group": "w",
 							"index": "B12",
 							"max": 10,
@@ -238,7 +234,7 @@
 							"type": "layer"
 						},
 						{
-							"default": 1,
+							"default": 5,
 							"group": "w",
 							"index": "B17",
 							"max": 10,
@@ -249,7 +245,7 @@
 							"type": "layer"
 						},
 						{
-							"default": 1,
+							"default": 5,
 							"group": "w",
 							"index": "B8",
 							"max": 10,
@@ -344,9 +340,9 @@
 			],
       "name": "Subtidal Deep Water Oyster Reefs",
 	  "printTitle": "North Carolina - Subtidal Oyster Reef Restoration Explorer",
-      "url": "http://dev.services2.coastalresilience.org/arcgis/rest/services/North_Carolina/Restoration_Explorer_Subtidal_Deep_Water_Oyster_Reefs/ImageServer",
-      "methods": "http://media.coastalresilience.org/NC/RestExpl_Methods.pdf",
-      "colorRamp": [[0, 196, 0, 169], [1, 255, 255, 129], [2, 204, 255, 51], [3, 76, 190, 110], [4, 13, 31, 133], [5, 150, 150, 150]],
+      "url": "http://services.coastalresilience.org:6080/arcgis/rest/services/North_Carolina/NC_Composite_1/ImageServer",
+      "methods": "https://ow-maps.s3.amazonaws.com/ncexplorer/oyster_sanctuary_layer_descriptions_for_tnc.docx",
+      "colorRamp": [[0, 50, 50, 50], [1, 255, 255, 129], [2, 204, 255, 51], [3, 76, 190, 110], [4, 13, 31, 133], [5, 150, 150, 150]],
       "inputRanges" : [-32768,1,1,10,10,20,20,30,30,101,101,32767],
       "outputValues" : [0,1,2,3,4,5],
 	  "outputLabels" : [{text:"Excluded Areas", "percent": "0"},{text:"Low", "percent": "20"},{text:"Medium", "percent": "50"},{text:"High", "percent": "80"},{text:"May not be suitable for specified restoration type", "percent": "100"}]

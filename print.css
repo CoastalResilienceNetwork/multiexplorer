@@ -59,12 +59,11 @@
 	
 	#formulaprint{
 	   visibility: visible;
-		top:1200px;
+		top:1100px;
 		left:0px;	
-		width:1300px;
+		width:1800px;
 		position:absolute;
 		font-size: 20px;
-		page-break-before: always;
 	}
 	
 	#tableWrapper{

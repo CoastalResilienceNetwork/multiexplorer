@@ -6,6 +6,7 @@ require({
 define([
         "dojo/_base/declare",
 		"framework/PluginBase",
+		"./resources/chosen.jquery",
 
 		"esri/request",
 		"esri/layers/ArcGISDynamicMapServiceLayer",
@@ -59,11 +60,13 @@ define([
 		"dijit/registry",
 		"require",
 		"./combine",
-		"dojo/text!./explorer.json"
+		"dojo/text!./explorer.json",
+		"xstyle/css!./resources/chosen.css"
 
        ],
        function (declare,
 					PluginBase,
+					chosen,
 					ESRIRequest,
 					ArcGISDynamicMapServiceLayer,
 					ArcGISImageServiceLayer,
@@ -311,7 +314,7 @@ define([
 
 				$printArea.append("<div id='legendprint' >" + leg + "</div>");
 				
-				$printArea.append("<div id='formulaprint'>" + "Formula for Map: <br><br>" + this.geography.BandFormulaText + this.geography.printText + "</div>");
+				$printArea.append("<div id='formulaprint'>" + "Formula for Map: <br><br>" + this.geography.BandFormulaText + "</div>");
 				
                 printDeferred.resolve();
 				
@@ -465,11 +468,16 @@ define([
 			
 					//showValueKey = this.toolbarName + " showinfographic";
 				    //localStorage.setItem(showValueKey, _showOnStart);
+					
+                self = this;
+				tool = this;
+
+
 				
 					declare.safeMixin(this, frameworkParameters);
 
 					domClass.add(this.container, "claro");
-					
+					domClass.add(this.container, "cr-dojo-dijits");
 					domClass.add(this.container, "plugin-multiExplorer");
 
 					this.explorerObject = dojo.eval("[" + explorer + "]")[0];
@@ -491,6 +499,11 @@ define([
 
 					nslidernode = domConstruct.create("span");
 					dom.byId(this.container).appendChild(nslidernode);
+					
+						
+					 //.removeClass( "sidebar-content" )
+					
+					//domStyle.set(, 'height', '300px');
 
           this.ddNode = domConstruct.create("span");
           dom.byId(this.container).appendChild(this.ddNode);
@@ -533,27 +546,12 @@ define([
 
           domConstruct.empty(this.ddNode);
 
+		  /*
           menu = new DropDownMenu({ style: "display: none;"});
 
 					domClass.add(menu.domNode, "claro");
 
 					array.forEach(this.usableRegions, lang.hitch(this,function(entry, i){
-
-/* 						layersRequest = esri.request({
-						  url: entry.url,
-						  content: { f: "json" },
-						  handleAs: "json",
-						  callbackParamName: "callback"
-						});
-
-						layersRequest.then(
-						  lang.hitch(entry,function(response) {
-							console.log(response);
-							this.data = response;
-						}), function(error) {
-							alert("Error loading Restoration Dashboard Layers, Check to make sure service(s) are on.");
-						}); */
-
 
 
 						menuItem1 = new MenuItem({
@@ -574,8 +572,71 @@ define([
 					});
 
 					dom.byId(this.ddNode).appendChild(this.button.domNode);
+					
+			*/	
 
 
+
+				
+					
+
+					outerBox = $('<div class="eeheader" />').appendTo($(this.ddNode));
+					s = $('<select class="chosenDD chosen-select mainChosen" id=expGeoSelect" data-placeholder="' + _config.ddText + '" />')
+
+					$('<option />', {value: "", text: ""}).appendTo(s);
+					
+					selIndex = -1;
+					
+					for(var reg in this.usableRegions) {
+						region = this.usableRegions[reg];
+						$('<option />', {value: region.name, text: region.name}).appendTo(s);
+						if (region.selected == true) {
+							selIndex = reg;
+						}
+					}
+					
+					if (this.usableRegions.length == 1) {
+						selIndex = 0;
+						this.usableRegions.selected = true;
+					}
+					
+					console.log(this.container);
+					s.appendTo(outerBox);	
+
+					ch = $(".chosenDD")
+					
+					ch.chosen({disable_search_threshold: 10})
+					//.change($.proxy(function(val) {
+					//  this.changeGeo(val);
+					//}, this));
+
+					//$("#eeGeoSelect_" + this.map.id).css("width", "220px");
+					$("#expGeoSelect__chosen").css("width", "220px");	
+					
+
+					//eeGeoSelect_map_0_chosen
+					ch.on('chosen:hiding_dropdown', lang.hitch(this, function(e,ob) 
+					
+					{
+						regy = ob.chosen.selected_item[0].innerText;
+						
+						reseter = lang.clone(this.ResetObject);
+						
+						
+						array.forEach(reseter.regions, lang.hitch(this,function(reg, t){
+
+						  if ($.trim(reg.name) == $.trim(regy)) {
+							  outreg = reg;
+							  
+						  }
+						
+						}));
+											
+						this.changeGeography(outreg, true);
+						
+					}));	
+					
+					
         },
 		
 		resetAll: function() {
@@ -1002,7 +1063,7 @@ define([
 
 					}
 
-					this.button.set("label",geography.name);
+					//this.button.set("label",geography.name);
 
 					ancillaryon = new Array();
 
@@ -1216,7 +1277,8 @@ define([
 								name: this.sliderpane.id + "_" + entry.group,
 								value: entry.default,
 								index: entry.index,
-                order: i,
+								order: i,
+								tabindex: t,
 								minimum: entry.min,
 								maximum: entry.max,
 								title: entry.text,
@@ -1249,6 +1311,7 @@ define([
 							nslidernodeheader = domConstruct.create("div", {style:"margin:3px", innerHTML: ""});
 							this.sliderpane.domNode.appendChild(nslidernodeheader);
 
+							
 							} else {
 					
 
@@ -1344,9 +1407,13 @@ define([
 
 							}
 
-							this.sliders.push(slider);
+						this.sliders.push(slider);	
+						
 
 						}
+
+						
+						
             itemIndex = itemIndex + 1
 					}));
 
@@ -1355,12 +1422,11 @@ define([
 
 			if (geography.combined != undefined) {
 				
-				if (geography.combined.hoverText == undefined) {geography.combined.hoverText ==""}
 						this.sliderpane = new ContentPane({
 							style:"padding: 8px",
 						//  style:"height:" + this.sph + "px !important",
 						  style: "display: none",
-						  title: '<span title="' + geography.combined.hoverText + '">' + geography.combined.name + '</span>',
+						  title: geography.combined.name,
 						  index: geography.tabs.length,
 						  content: geography.combined.text
 						});	
@@ -1629,11 +1695,11 @@ define([
 					this.BandFormula = new Array();
 					this.GroupTotals = new Array();
 					this.BandFormulaNames = new Array();
-					 
 
 					cgroup = "";
 
 					array.forEach(this.sliders, lang.hitch(this,function(entry, i){
+						
 						
 					  if (selectedIndex == entry.tabindex) {
 
@@ -1695,19 +1761,22 @@ define([
 					this.BandFormula.push(cbf);
 					this.BandFormulaNames.push(cbfnames);
 					this.GroupTotals.push(hottytot);
-					
 
 					outform = new Array();
 					outformName = new Array();
 
 					array.forEach(this.BandFormula, lang.hitch(this,function(bgroup, i){
 
-					 if (this.explorerObject.averageGroups == true) {
+					 withinGroup = this.explorerObject.averageGroups[i];
+					 
+					 if (withinGroup == undefined) { withinGroup = this.explorerObject.averageGroups };
+					 
+					 if (withinGroup == true) {
 						  if (bgroup.length > 0) {
 							outform.push("((" + bgroup.join(" + ") + ") / " + this.GroupTotals[i] + ")");
 						  }
 					  } else {
-						outform.push("(" + bgroup.join(" + ") + ")");
+						outform.push("(" + bgroup.join(" " + withinGroup + " ") + ")");
 					  }
 					}));
 
@@ -1715,12 +1784,16 @@ define([
 					
 					array.forEach(this.BandFormulaNames, lang.hitch(this,function(bgroup, i){
 
-					 if (this.explorerObject.averageGroups == true) {
+					 withinGroup = this.explorerObject.averageGroups[i];
+					 
+					 if (withinGroup == undefined) { withinGroup = this.explorerObject.averageGroups };
+					
+					 if (withinGroup == true) {
 						  if (bgroup.length > 0) {
 							outformName.push("((" + bgroup.join(" + ") + ") / " + this.GroupTotals[i] + ")");
 						  }
 					  } else {
-						outformName.push("(" + bgroup.join(" + ") + ")");
+						outformName.push("(" + bgroup.join(" " + withinGroup + " ") + ")");
 					  }
 					}));
 					
@@ -1733,87 +1806,7 @@ define([
 					
 					this.geography.BandFormulaText = outforme + " = " + outformName.join(" " + this.explorerObject.betweenGroups + " ");
 					
-					cformula = outform.join(" " + this.explorerObject.betweenGroups + " ");
-					
-	if (true) {	
-
-		  if (this.geography.tabs[selectedIndex].inputRanges == undefined) {
-			linputRanges = this.geography.inputRanges;
-		  } else {
-			linputRanges = this.geography.tabs[selectedIndex].inputRanges;
-		  }
-
-		  if (this.geography.tabs[selectedIndex].outputValues == undefined) {
-			loutputValues = this.geography.outputValues;
-		  } else {
-			loutputValues = this.geography.tabs[selectedIndex].outputValues;
-		  }		
-							
-		  if (cformula == "") {cformula = "(B1 * 0)"; this.BandFormula[0] = "(B1 * 0)"};
-
-				rasterFunction = new RasterFunction();
-				
-				console.log("DDDDDDDDDD###")
-				console.log(this.BandFormula);
-				console.log(this.GroupTotals);
-
-				bf = this.BandFormula[0]
-
-				bffs = new Array();
-				
-				for(var i=0; i<bf.length; i++){
-				
-					rasterFunction.functionName = "BandArithmetic";
-								arguments = {"Raster" : "$$"};
-								arguments.Method= 0;
-								arguments.BandIndexes = bf[i]  //this.formula;
-								rasterFunction.arguments = arguments;
-								rasterFunction.variableName = "L" + i;
-					rasterFunction.outputPixelType = "U16";
-
-					bffs.push(lang.clone(rasterFunction));
-					console.log(bf[i]);
-					
-				}
-				
-				//if (bffs.length == 1) {
-
-					rfout = bffs[0];			
-
-				//} else {
-
-				for(var i=0; i<(bffs.length -1); i++){
-					
-					console.log(bffs[i+1])
-					
-					rft = new RasterFunction();
-					rft.functionName = "Local";
-					rft.functionArguments = {
-					  "Operation" : 1,
-					  "Rasters" : [rfout, bffs[i+1]]
-					};
-					rft.variableName = "T" + i;
-					rft.outputPixelType = "U16";				
-				
-					rfout = lang.clone(rft)
-
-				}
-				
-				rf1h3 = new RasterFunction();
-				rf1h3.functionName = "Local";
-				rf1h3.functionArguments = {
-				  "Operation" : 23,
-				  "Rasters" : [rfout, this.GroupTotals[0]]
-				};
-				rf1h3.variableName = "riskOutput";
-				rf1h3.outputPixelType = "u16";	
-				
-
-				this.crasta = rf1h3
-			
-			}
-					
-					return cformula
+					return outform.join(" " + this.explorerObject.betweenGroups + " ");
 
 				
 			   },
@@ -1826,13 +1819,11 @@ define([
 				   
 					formulas = new Array();
 					Tformulas = new Array();
-					rfuncs = new Array();
 				   
 					array.forEach(this.geography.tabs, lang.hitch(this,function(tab, t){
 						formula = this.getFormula(t);
 						formulas.push(formula);
 						Tformulas.push(this.geography.BandFormulaText);
-						rfuncs.push(lang.clone(this.crasta))
 					}));
 					
 					console.log(Tformulas);
@@ -1895,7 +1886,7 @@ define([
 						
 						//alert('');
 						
-						rfout = this.combiner.combineFunction(formulas, this.geography, Tformulas, rfuncs);
+						rfout = this.combiner.combineFunction(formulas, this.geography, Tformulas);
 					
 						
 						//rfout = poopy.combine;
@@ -1960,7 +1951,7 @@ define([
 					//perhaps this needs to be done sometime but it appears to work now.
 					//formget = lang.hitch(this,this.getFormula(selectedIndex))
 					this.formula = this.getFormula(selectedIndex);
-					
+					 console.log(this.formula);
 					
 					  if (this.geography.tabs[selectedIndex].colorRamp == undefined) {
 						lcolorRamp = this.geography.colorRamp;
@@ -2106,7 +2097,7 @@ define([
 							this.map.setExtent(this.currentLayer.fullExtent, true);
 						}
 
-						 
+						 rasterFunction = new RasterFunction();
 						// {
         // "rasterFunction": "Stretch",
         // "rasterFunctionArguments": {
@@ -2131,35 +2122,137 @@ define([
 //			);
 
 		//alert(this.formula);  
+		
+      if (this.formula == "") {this.formula = "(B1 * 0)"; this.BandFormula[0] = "(B1 * 0)"};
 
-		///cut it from here
-		
-				rf1h3 = this.crasta 
-				
-				
-				rf = new RasterFunction();
-				rf.functionName = "Remap";
-				rf.functionArguments = {
-				  "InputRanges" : linputRanges,
-				  "OutputValues" : loutputValues,
-				  "Raster" : rf1h3
-				};
-				rf.variableName = "riskOutput";
-				rf.outputPixelType = "U8";
-				
-				console.log('howdy');
-				//console.log(rf1h2);
 
-				colorRF = new RasterFunction();
-				colorRF.functionName = "Colormap";
-				colorRF.variableName = "riskOutput";
-				colorRF.functionArguments = {
-				  "Colormap" : lcolorRamp,
-				  "Raster" : rf  //use the output of the remap rasterFunction for the Colormap rasterFunction
-				};
+			//console.log(this.BandFormula[0][0]);
+			console.log(this.GroupTotals);
+		//op = 1	
+		
+		groupers = new Array();
+		
+		array.forEach(this.BandFormula, lang.hitch(this,function(bf, i){
+
+		 withinGroup = this.explorerObject.averageGroups[i];
+
+		 if (withinGroup == undefined) { withinGroup = this.explorerObject.averageGroups };
+		
+		 if (withinGroup == true) {op = 1};
+		 if (withinGroup == false) {op = 1};
+		 if (withinGroup == "*") {op = 3};
+		 if (withinGroup == "+") {op = 1};
+		 if (withinGroup == "-") {op = 2};
+		 if (withinGroup == "/") {op = 23};
+	
+		//	bf = this.BandFormula[1]  // <--- this is just getting the first group
+		
+			bffs = new Array();
+			
+			for(var i=0; i<bf.length; i++){
+			
+				rasterFunction.functionName = "BandArithmetic";
+							arguments = {"Raster" : "$$"};
+							arguments.Method= 0;
+							arguments.BandIndexes = bf[i]  //this.formula;
+							rasterFunction.arguments = arguments;
+							rasterFunction.variableName = "L" + i;
+				rasterFunction.outputPixelType = "U16";
+
+				bffs.push(lang.clone(rasterFunction));
+				console.log(bf[i]);
 				
+			}
+			
+			//if (bffs.length == 1) {
+
+				rfout = bffs[0];			
+
+			//} else {
+
+			for(var j=0; j<(bffs.length -1); j++){
+				
+				console.log(bffs[j+1])
+				
+				rft = new RasterFunction();
+				rft.functionName = "Local";
+				rft.functionArguments = {
+				  "Operation" : op,
+				  "Rasters" : [rfout, bffs[j+1]]
+				};
+				rft.variableName = "T" + j;
+				rft.outputPixelType = "U16";				
+			
+				rfout = lang.clone(rft)
+
+			}
+	
+			if (withinGroup == true) {
+	
+				rf1h3 = new RasterFunction();
+				rf1h3.functionName = "Local";
+				rf1h3.functionArguments = {
+				  "Operation" : 23,
+				  "Rasters" : [rfout, this.GroupTotals[0]]
+				};
+				rf1h3.variableName = "riskOutput";
+				rf1h3.outputPixelType = "U16";	
+				
+				groupers.push(lang.clone(rf1h3));
+				
+			} else {
+				
+				groupers.push(rfout);
+				
+			}
 		
+		}));
+
+		 if (this.explorerObject.betweenGroups == true) {opp = 1};
+		 if (this.explorerObject.betweenGroups == false) {opp = 1};
+		 if (this.explorerObject.betweenGroups == "*") {opp = 3};
+		 if (this.explorerObject.betweenGroups == "+") {opp = 1};
+		 if (this.explorerObject.betweenGroups == "-") {opp = 2};
+		 if (this.explorerObject.betweenGroups == "/") {opp = 23};
+
+		  gout = groupers[0];
+		 console.log(groupers);
+			for(var i=0; i<(groupers.length -1); i++){
+			  if (groupers[i+1] != undefined) {
+				rft = new RasterFunction();
+				rft.functionName = "Local";
+				rft.functionArguments = {
+				  "Operation" : opp,
+				  "Rasters" : [gout, groupers[i+1]]
+				};
+				rft.variableName = "G" + i;
+				rft.outputPixelType = "U16";				
+			
+				gout = lang.clone(rft)
+			  }
+			}
 		
+            rf = new RasterFunction();
+            rf.functionName = "Remap";
+            rf.functionArguments = {
+              "InputRanges" : linputRanges,
+              "OutputValues" : loutputValues,
+              "Raster" : gout
+            };
+            rf.variableName = "riskOutput";
+            rf.outputPixelType = "U8";
+			
+			console.log('howdy');
+			console.log(rf);
+
+            colorRF = new RasterFunction();
+            colorRF.functionName = "Colormap";
+            colorRF.variableName = "riskOutput";
+            colorRF.functionArguments = {
+              "Colormap" : lcolorRamp,
+              "Raster" : rf  //use the output of the remap rasterFunction for the Colormap rasterFunction
+            };
+
 						this.currentLayer.setRenderingRule(colorRF);
 
 					   //legenddiv = domConstruct.create("img", {src:"height:400px", innerHTML: "<b>" + "Legend for Restoration"  + ":</b>"});

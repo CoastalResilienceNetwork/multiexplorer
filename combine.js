@@ -54,16 +54,23 @@ define([
 				],
 				
 		
-		combineFunction: function(formulas, geo, Tformulas, rfuncs){
-				
-						geo.BandFormulaText = Tformulas[0] + "<br><br>" + Tformulas[1] + "<br><br>" + Tformulas[2] + "<br><br>" + Tformulas[3] + "<br><br>" 
+		combineFunction: function(formulas, geo, Tformulas){
+			
+						geo.BandFormulaText = Tformulas[0] + "<br><br>" + Tformulas[1] + "<br><br>" + Tformulas[2] + "<br><br>" + Tformulas[3] + "<br><br> A text desciption of how the layers are combined could appear in this location."
 						
-						rasterFunction0 = rfuncs[0];
+						rasterFunction0 = new RasterFunction();
+						rasterFunction0.functionName = "BandArithmetic";
+						arguments = {"Raster" : "$$"};
+						arguments.Method= 0;
+						arguments.BandIndexes = formulas[0];
+						rasterFunction0.arguments = arguments;
+						rasterFunction0.variableName = "riskOutput";
+						rasterFunction0.outputPixelType = "U8";
 						
 						rf0 = new RasterFunction();
 						rf0.functionName = "Local";
 						rf0.functionArguments = {
-						  "Operation" : 29,
+						  "Operation" : 28,
 						  "Rasters" : [rasterFunction0, 67]
 						};
 						rf0.variableName = "riskOutput";
@@ -79,12 +86,19 @@ define([
 						rfc.outputPixelType = "U16";							
 
 
-						rasterFunction1 = rfuncs[1];
+						rasterFunction1 = new RasterFunction();
+						rasterFunction1.functionName = "BandArithmetic";
+						arguments = {"Raster" : "$$"};
+						arguments.Method= 0;
+						arguments.BandIndexes = formulas[1];
+						rasterFunction1.arguments = arguments;
+						rasterFunction1.variableName = "riskOutput";
+						rasterFunction1.outputPixelType = "U8";
 
 						rf1h = new RasterFunction();
 						rf1h.functionName = "Local";
 						rf1h.functionArguments = {
-						  "Operation" : 29,
+						  "Operation" : 28,
 						  "Rasters" : [rasterFunction1, 33]
 						};
 						rf1h.variableName = "riskOutput";
@@ -123,12 +137,19 @@ define([
 						rft = rfta
 						
 						
-						rasterFunction2 = rfuncs[2];
+						rasterFunction2 = new RasterFunction();
+						rasterFunction2.functionName = "BandArithmetic";
+						arguments = {"Raster" : "$$"};
+						arguments.Method= 0;
+						arguments.BandIndexes = formulas[2];
+						rasterFunction2.arguments = arguments;
+						rasterFunction2.variableName = "riskOutput";
+						rasterFunction2.outputPixelType = "U8";
 
 						rf2 = new RasterFunction();
 						rf2.functionName = "Local";
 						rf2.functionArguments = {
-						  "Operation" : 29,
+						  "Operation" : 28,
 						  "Rasters" : [rasterFunction2, 50]
 						};
 						rf2.variableName = "riskOutput";
@@ -145,12 +166,19 @@ define([
 						
 						
 
-						rasterFunction3 = rfuncs[3];
+						rasterFunction3 = new RasterFunction();
+						rasterFunction3.functionName = "BandArithmetic";
+						arguments = {"Raster" : "$$"};
+						arguments.Method= 0;
+						arguments.BandIndexes = formulas[3];
+						rasterFunction3.arguments = arguments;
+						rasterFunction3.variableName = "riskOutput";
+						rasterFunction3.outputPixelType = "U8";
 
 						rfe = new RasterFunction();
 						rfe.functionName = "Local";
 						rfe.functionArguments = {
-						  "Operation" : 29,
+						  "Operation" : 28,
 						  "Rasters" : [rasterFunction3, 50]
 						};
 						rfe.variableName = "riskOutput";
@@ -189,17 +217,16 @@ define([
 						rfa.outputPixelType = "U16";
 						
 						
-						//rfout = new RasterFunction();
-						//rfout.functionName = "Remap";
-						//rfout.functionArguments = {
-						//  "InputRanges" : [0,250,250,500,500,1300],
-						//  "OutputValues" : [1,100,250],
-						//  "Raster" : rfa
-						//};
-						//rfout.variableName = "riskOutput";
-						//rfout.outputPixelType = "U8";
-						console.log("HAAA")
-						console.log(rfa)
+						rfout = new RasterFunction();
+						rfout.functionName = "Remap";
+						rfout.functionArguments = {
+						  "InputRanges" : [0,250,250,500,500,1300],
+						  "OutputValues" : [1,100,250],
+						  "Raster" : rfa
+						};
+						rfout.variableName = "riskOutput";
+						rfout.outputPixelType = "U8";
+						
 						
 						colorRF = new RasterFunction();
 						colorRF.functionName = "Colormap";
