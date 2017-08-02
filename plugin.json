@@ -1,7 +1,6 @@
 {
     "css": [
-        "plugins/restoration_explorer/cr-dojo-dijits.css",
-		"plugins/restoration_explorer/main.css"
+        "plugins/restoration_explorer/cr-dojo-dijits.css"
     ],
     "use": {
         "underscore": { "attach": "_" },
