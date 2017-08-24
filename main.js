@@ -581,7 +581,7 @@ define([
 					
 
 					outerBox = $('<div class="eeheader" />').appendTo($(this.ddNode));
-					s = $('<select class="chosenDD chosen-select mainChosen" id=expGeoSelect" data-placeholder="' + _config.ddText + '" />')
+					s = $('<select class="chosenDD chosen-select mainChosen" id="expGeoSelect" data-placeholder="' + _config.ddText + '" />')
 
 					$('<option />', {value: "", text: ""}).appendTo(s);
 					
@@ -603,7 +603,7 @@ define([
 					console.log(this.container);
 					s.appendTo(outerBox);	
 
-					ch = $(".chosenDD")
+					ch = $("#expGeoSelect")
 					
 					ch.chosen({disable_search_threshold: 10})
 					//.change($.proxy(function(val) {
@@ -611,14 +611,17 @@ define([
 					//}, this));
 
 					//$("#eeGeoSelect_" + this.map.id).css("width", "220px");
-					$("#expGeoSelect__chosen").css("width", "220px");	
+					$("#expGeoSelect_chosen").css("width", "220px");	
 					
 
 					//eeGeoSelect_map_0_chosen
-					ch.on('chosen:hiding_dropdown', lang.hitch(this, function(e,ob) 
 					
-					{
-						regy = ob.chosen.selected_item[0].innerText;
+					
+					$("#expGeoSelect").on('change', lang.hitch(this, function(e,ob) 
+					
+					{  console.log(e.currentTarget.value);
+						//regy = ob.chosen.selected_item[0].innerText;
+						regy = e.currentTarget.value;
 						
 						reseter = lang.clone(this.ResetObject);
 						
@@ -631,7 +634,7 @@ define([
 						  }
 						
 						}));
-											
+					
 						this.changeGeography(outreg, true);
 						
 					}));	
